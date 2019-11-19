@@ -21,6 +21,6 @@ app.prepare().then(() => {
         handle(req, res, parseUrl);
         break
     }
-  }).listen(99);
+  }).listen(3000);
   
 });
