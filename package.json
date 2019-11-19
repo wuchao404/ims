@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "git@github.com:w440149517/nextjs-demo.git",
   "scripts": {
     "start": "nodemon --exec ts-node --project tsconfig.server.json server/index.ts",
     "start1": "nodemon --exec ts-node --project tsconfig.server.json server/express.ts"
