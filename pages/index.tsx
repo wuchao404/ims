@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import moment from 'moment';
+import {Button} from 'antd'
 
 export default () => {
   const encryptFkey = (oldF: string, date: Date) => {
     const ddHHmmss = moment(date).format('DDHHmmss');
-    console.log("ddHHmmss: " + ddHHmmss)
     const times = ddHHmmss.split('');
     return oldF.split('').map((str: string, index: number) => {
       const number = (str.charCodeAt(0) ^ (times[index].charCodeAt(0) + 32)) - 1;
@@ -26,6 +26,9 @@ export default () => {
       <Link href="/home"><a>跳转到主页</a></Link>
       <br />
       <Link href="/login"><a>登录页</a></Link>
+      <div>
+        <Button type="primary">确定</Button>
+      </div>
     </div>
   )
 }
