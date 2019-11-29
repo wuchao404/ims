@@ -5,8 +5,7 @@
   "license": "MIT",
   "homepage": "https://w440149517.github.io/nextjs-demo",
   "scripts": {
-    "start": "nodemon --exec ts-node --project tsconfig.server.json server/index.ts",
-    "start1": "nodemon --exec ts-node --project tsconfig.server.json server/express.ts",
+    "start": "nodemon --exec ts-node --project tsconfig.server.json server/app.ts",
     "build": "next build && tsc --project tsconfig.server.json",
     "deploy": "node dist/index.js"
   },
