@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon --exec ts-node --project tsconfig.server.json server/app.ts",
     "build": "next build && tsc --project tsconfig.server.json",
-    "deploy": "node dist/index.js"
+    "deploy": "node dist/app.js"
   },
   "dependencies": {
     "@types/express": "^4.17.2",
