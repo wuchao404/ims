@@ -1,4 +1,4 @@
-import mysql,{ConnectionConfig,MysqlError,PoolConnection,QueryFunction,queryCallback} from 'mysql';
+import mysql,{ConnectionConfig} from 'mysql';
 // 数据库启动配置
 const config: ConnectionConfig = {
   host:'123.206.72.106',
