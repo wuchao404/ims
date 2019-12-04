@@ -2,9 +2,11 @@
 import express,{Request, Response} from 'express';
 import next from 'next';
 import * as User from './controller/user'
-import './config/mysql'
+import './config/mysql';
+import * as configs from './config/index'
 
-const app = next({ dev: true });
+console.log("env:"+process.env.NODE_ENV)
+const app = next({ dev: configs.dev });
 const handle = app.getRequestHandler();
 const server = express();
 
