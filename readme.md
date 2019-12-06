@@ -9,3 +9,18 @@ yarn add antd
 
 # 2.重写_app.js
 [详情查看](https://nextjs.org/docs#custom-app)
+
+# 3.[使用body-parser解析post请求参数](http://www.expressjs.com.cn/4x/api.html#req.body)
+```JavaScript
+var app = require('express')();
+var bodyParser = require('body-parser');
+
+
+app.use(bodyParser.json()); // 解析 application/json
+app.use(bodyParser.urlencoded({ extended: true })); // 解析 application/x-www-form-urlencoded
+
+app.post('/profile', upload.array(), function (req, res, next) {
+  console.log(req.body);
+  res.json(req.body);
+});
+```
