@@ -1,11 +1,11 @@
 {
-  "name": "nextjsDemo1",
+  "name": "ims",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "homepage": "https://w440149517.github.io/nextjs-demo",
+  "homepage": "http://123.206.72.106/",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon --exec ts-node  server/app.ts",
+    "start": "cross-env NODE_ENV=development nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
     "deploy": "node dist/app.js",
     "pm2": "NODE_ENV=production pm2 start dist/app.js --name='ims'"
