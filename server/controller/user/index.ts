@@ -2,10 +2,10 @@ import e, {Request, Response} from 'express';
 import {query4cb,query} from '../../db/dbHelper'
 
 export const doLogin = (req: Request, res: Response) => {
+  const {username, password} = req.params
+  console.log(`username:${username}, password:${password}`)
   query4cb('select * from user',(err,results,fields) => {
-    console.log('err:', err);
-    console.log('results:', results);
-    console.log('fields:', fields);
+    
     res.send(results)
   });
 }
