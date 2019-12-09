@@ -24,3 +24,7 @@ app.post('/profile', upload.array(), function (req, res, next) {
   res.json(req.body);
 });
 ```
+
+# 4.[使用Knex.js进行Mysql的ORM操作，快速执行sql](http://knexjs.org/#Installation)
+- 1.[kenx基础语法](http://knexjs.org/#Builder-identifier-syntax)
+- 2.
