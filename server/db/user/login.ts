@@ -6,13 +6,13 @@ export interface User {
   password: string,
 }
 
-const userBuilder:QueryBuilder = kConnection('user');
+const userBuilder = ():QueryBuilder => kConnection<User>('user');
 
 // 查询
 export const queryUserIds = (username = '', password = ''):QueryBuilder => {
-  return userBuilder.select().where({
+  return userBuilder().where({
     username:username,
     password:password
-  })
+  }).select()
 }
 
