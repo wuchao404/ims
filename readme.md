@@ -27,4 +27,14 @@ app.post('/profile', upload.array(), function (req, res, next) {
 
 # 4.[使用Knex.js进行Mysql的ORM操作，快速执行sql](http://knexjs.org/#Installation)
 - 1.[kenx基础语法](http://knexjs.org/#Builder-identifier-syntax)
-- 2.
+- 2.[knex调试模式，自动打印sql语句](http://knexjs.org/#Installation-debug)
+- 3.[使用column给表字段起别名，将下划线的命名形式改为驼峰式](http://knexjs.org/#Builder-column)
+- 
+# 5.redis使用
+- 1.[安装redis，并在命令行中测试](https://redis.io/download)
+- 2.[redis配置远程登录+密码登录](https://blog.csdn.net/weixin_38628533/article/details/81074895)
+
+# 6.jwt-token使用
+- 1.[jsonwebtoken官方地址](https://github.com/auth0/node-jsonwebtoken)
+- 2.过期时间`expiresIn`有两种类型，number(单位是秒)和string)[string类型使用`@zeit/ms`表示](https://github.com/zeit/ms)
+- 3.

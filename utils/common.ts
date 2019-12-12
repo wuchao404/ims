@@ -1,6 +1,11 @@
 import moment from 'moment';
 import * as responseData from './responseData'
 
+/**
+ * 生成8位的随机码
+ * @param oldF 
+ * @param date 
+ */
 export const encryptFkey = (oldF: string, date: Date) => {
   const ddHHmmss = moment(date).format('DDHHmmss');
   const times = ddHHmmss.split('');
@@ -9,7 +14,7 @@ export const encryptFkey = (oldF: string, date: Date) => {
     return String.fromCharCode(number);
   }).join('');
 }
-
+// 
 export const resData = responseData;
 
 

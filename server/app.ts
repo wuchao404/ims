@@ -4,6 +4,7 @@ import next from 'next';
 // import * as User from './controller/user'
 // import './config/mysql';
 import './db/knexHelper';
+import './db/redisHelper';
 import * as configs from './config/index';
 import bodyParser from 'body-parser';
 import * as Login from './controller/user/login'

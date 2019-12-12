@@ -1,18 +1,22 @@
 import kConnection from '../knexHelper';
 import knex, {QueryBuilder, } from 'knex';
 
-export interface User {
-  username: string,
-  password: string,
-}
+import { User } from '../../modal/user';
 
 const userBuilder = ():QueryBuilder => kConnection<User>('user');
 
-// 查询
+// 查询用户
 export const queryUserIds = (username = '', password = ''):QueryBuilder => {
-  return userBuilder().where({
+  return userBuilder().column(
+    { 'userId':'user_id' },
+    { 'mobilePhone': 'mobile_phone'},
+    'username',
+    'password',
+    'name',
+    'birthday',
+    'address',
+  ).where({
     username:username,
-    password:password
   }).select()
 }
 
