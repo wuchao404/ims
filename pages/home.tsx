@@ -1,3 +1,9 @@
 import React from 'react';
 
-export default () => <div>首页</div>
+
+export default () => {
+
+  return (
+    <div>首页</div>
+  )
+}

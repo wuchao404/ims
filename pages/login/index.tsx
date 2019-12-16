@@ -2,6 +2,10 @@ import React,{useState, useEffect} from 'react';
 import {Input, Button} from 'antd'
 import './index.less';
 import axios from '../../utils/axios'
+import {setToken} from '../../utils/frontend/storage';
+import Router from 'next/router'
+import routerMap from '../../router/routerMap';
+import {loginApi} from '../../assets/api/login'
 
 export default () => {
   const initState = {
@@ -18,15 +22,14 @@ export default () => {
   };
   // 登录接口
   const doLogin = () => {
-    axios({
-      method:'post',
-      url: '/api/doLogin',
-      data: {
-        username: state.username,
-        password: state.password
-      }
+    loginApi({
+      username: state.username,
+      password: state.password
     }).then(res => {
-      console.log("res:", res);
+      if (res.data.status === 200) {
+        setToken(res.data.data.token);
+        Router.replace(routerMap.home.pathname);
+      }
     })
   }
   return (

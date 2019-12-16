@@ -1,5 +1,5 @@
-# 1.引入antd
-1.1 载依赖
+# 1.next.js初始配置
+1.1 引入antd
 ```
 yarn add --dev @zeit/next-less babel-plugin-import less less-vars-to-js null-loader
 yarn add antd
@@ -37,4 +37,9 @@ app.post('/profile', upload.array(), function (req, res, next) {
 # 6.jwt-token使用
 - 1.[jsonwebtoken官方地址](https://github.com/auth0/node-jsonwebtoken)
 - 2.过期时间`expiresIn`有两种类型，number(单位是秒)和string)[string类型使用`@zeit/ms`表示](https://github.com/zeit/ms)
-- 3.
+
+
+# 7.next.js使用
+- 1. [拦截popstate，监听浏览器的前进后退按钮](https://nextjs.org/docs#intercepting-popstate)
+- 2. [监听router变化，过滤白名单](https://nextjs.org/docs#router-events)
+> 所有监听方法，首次刷新页面是不执行的，因此无法

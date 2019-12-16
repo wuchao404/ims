@@ -23,6 +23,6 @@ server.all('*',(req: Request,res: Response) => {
 })
 
 app.prepare().then(() => {
-  server.listen(3000)
+  server.listen(4000)
 })
 export default server;
