@@ -43,3 +43,4 @@ app.post('/profile', upload.array(), function (req, res, next) {
 - 1. [拦截popstate，监听浏览器的前进后退按钮](https://nextjs.org/docs#intercepting-popstate)
 - 2. [监听router变化，过滤白名单](https://nextjs.org/docs#router-events)
 > 所有监听方法，首次刷新页面是不执行的，因此无法
+- 3.[使用`/// <reference path`引用node_modules中的其他`d.ts`声明文件](https://www.jianshu.com/p/c143e7af7c04)

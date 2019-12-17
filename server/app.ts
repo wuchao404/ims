@@ -1,26 +1,17 @@
 
 import express,{Request, Response} from 'express';
 import next from 'next';
-// import * as User from './controller/user'
-// import './config/mysql';
+import NextServer from 'next/dist/next-server/server/next-server';
 import './db/knexHelper';
 import './db/redisHelper';
 import * as configs from './config/index';
-import bodyParser from 'body-parser';
-import * as Login from './controller/user/login'
+import ExpressServer from './expressServer';
+import {Express} from 'express';
 
 
 console.log("env:"+process.env.NODE_ENV)
-const app = next({ dev: configs.dev });
-const handle = app.getRequestHandler();
-const server = express();
-server.use('/api',bodyParser.json());
-
-server.post('/api/doLogin',Login.doLogin)
-
-server.all('*',(req: Request,res: Response) => {
-  handle(req, res);
-})
+const app: NextServer = next({ dev: configs.dev });
+const server: Express = new ExpressServer(app).init();
 
 app.prepare().then(() => {
   server.listen(4000)
