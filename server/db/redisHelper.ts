@@ -6,16 +6,18 @@ const client: RedisClient = redis.createClient(redisConfig);
 // client.auth(redisConfig.password!);
 export default client;
 
-export const queryByToken = (token = '',) => {
-  
+// 此token是否在redis中
+export const existTokenInRedis = (token: string): boolean => {
+  return client.exists(token);
 }
-
+// 向redis中添加token
 export const addToken2Redis = (token: string,user: User) => {
   user.password && delete user.password;
   client.hmset(token, {...user},(err: Error | null, reply: any) => {
     console.log('reply:',reply)
   })
 }
-export const deleteByToken = (token = '') => {
-
+// 删除redis中的token
+export const deleteByToken = (token = ''): boolean => {
+  return client.del(token);
 }

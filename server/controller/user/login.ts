@@ -16,6 +16,8 @@ export const doLogin = (req: Request, res: Response) => {
     }else if (users.length === 1 && users[0].password === password){
       const token = createJwtToken(users[0]);
       addToken2Redis(token,users[0])
+      const decode = verifyToken(token);
+      console.log('decode-user:',decode)
       const success = resData.success({ 
         message: '登陆成功', 
         data: { token } 

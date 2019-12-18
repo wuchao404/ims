@@ -4,6 +4,8 @@ import NextServer from 'next/dist/next-server/server/next-server';
 import { IncomingMessage, ServerResponse } from 'http';
 import { UrlWithParsedQuery } from 'url';
 import * as Login from './controller/user/login';
+import * as Info from './controller/info';
+import {interceptAPI} from './tools/interception'
 
 // express服务
 class ExpressServer {
@@ -16,10 +18,12 @@ class ExpressServer {
     this.handle = app.getRequestHandler();
   }
   setUse () {
-    this.server.use('/api',bodyParser.json());
+    this.server.use('/api',bodyParser.json());// 解析post body
+    this.server.use('/api', interceptAPI); // 通用拦截器
   }
   setAPI () {
-    this.server.post('/api/doLogin',Login.doLogin)
+    this.server.post('/api/doLogin',Login.doLogin);
+    this.server.get('/api/info/list',Info.getInfoList);
     this.server.all('*',(req: Request,res: Response) => {
       this.handle(req, res);
     })
