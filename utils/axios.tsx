@@ -6,10 +6,6 @@ import routerMap from '../router/routerMap';
 import { jumpToLogin } from '../router/redirect'
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  if (!hasToken()) {
-    jumpToLogin();
-    return Promise.reject();
-  }
   config.headers['token'] = getToken();
   return config;
 },(err: any) => {
@@ -20,6 +16,8 @@ axios.interceptors.response.use((response: AxiosResponse) => {
   if (status === 40000 || status === 40001 || status === 40002) {
     notification.warn({ message: '提示', description: message, duration: 2});
     jumpToLogin();
+  } else if (status >= 400) {
+    notification.warn({ message: '提示', description: message, duration: 2});
   }
   return response;
 },(err: any) => {

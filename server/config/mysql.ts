@@ -4,8 +4,8 @@ import * as configs from '../config/index'
 const config: ConnectionConfig = {
   host: configs.mysqlHost,
   port:3306,
-  user:'root',
-  password:'w53476157',
+  user:'wuchao',
+  password:'123456',
   database: 'management'
 }
 const pool = mysql.createPool(config);

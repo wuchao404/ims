@@ -6,8 +6,8 @@ const config:Config = {
   connection: {
     host: configs.mysqlHost,
     port: 3306,
-    user: 'root',
-    password:'w53476157',
+    user: 'wuchao',
+    password:'123456',
     database: 'management'
   },
   pool:{// 连接池
