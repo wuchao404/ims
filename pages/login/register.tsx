@@ -1,6 +1,7 @@
 import React,{ useEffect,useState } from 'react';
 import {registerApi} from '../../assets/api/login';
 import { Button, Input } from 'antd';
+import './index.less';
 
 export default () => {
 
@@ -28,18 +29,18 @@ export default () => {
     })
   }
   return (
-    <div>
-      <Input 
+    <div className='login_div'>
+      <div className='content_div'>
+        <Input 
           placeholder='请输入账号'
           onBlur={e => $set({ username: e.target.value })}
-      />
-      <br />
-      <Input 
+        />
+        <Input 
           placeholder='请输入密码'
           onBlur={e => $set({ password: e.target.value })}
-      />
-      <br />
-      <Button loading={state.loading} onClick={doRegister}>注册</Button>
+        />
+        <Button loading={state.loading} onClick={doRegister}>注册</Button>
+      </div>
     </div>
   )
 }

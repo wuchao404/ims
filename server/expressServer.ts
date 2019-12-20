@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import NextServer from 'next/dist/next-server/server/next-server';
 import { IncomingMessage, ServerResponse } from 'http';
 import { UrlWithParsedQuery } from 'url';
-import * as Login from './controller/user/login';
+import * as UserCenter from './controller/user';
 import * as Info from './controller/info';
 import {interceptAPI} from './tools/interception'
 
@@ -22,8 +22,9 @@ class ExpressServer {
     this.server.use('/api', interceptAPI); // 通用拦截器
   }
   setAPI () {
-    this.server.post('/api/doLogin',Login.doLogin);
-    this.server.get('/api/info/list',Info.getInfoList);
+    this.server.post('/api/doLogin',UserCenter.default.doLogin);
+    this.server.post('/api/register',UserCenter.default.doRegister);
+    this.server.get('/api/info/list',Info.getInfoList);// 首页列表
     this.server.all('*',(req: Request,res: Response) => {
       this.handle(req, res);
     })
