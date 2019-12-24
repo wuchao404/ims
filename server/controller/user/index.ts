@@ -1,8 +1,8 @@
-import {doRegister} from './register';
+import {doRegister,checkUsername} from './register';
 import {doLogin} from './login';
-
 
 export default {
   doRegister,
-  doLogin
+  doLogin,
+  checkUsername
 }

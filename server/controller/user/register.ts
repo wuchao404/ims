@@ -1,13 +1,66 @@
 import { User } from './../../modal/user';
 import {Request, Response} from 'express';
-import { queryUserIds } from '../../db/user/login';
+import { insertUser2DB } from '../../db/user/register';
+import { queryUserId } from '../../db/user/login';
+import { createUserId } from '../../tools/userTool';
+import * as ResData from '../../../utils/responseData';
 
 // 注册接口
-export const doRegister = (req: Request, res: Response) => {
-  const { username = ''} = req.body;
-  queryUserIds(username).then((users: User[]) => {
-
+export const doRegister = async (req: Request, res: Response) => {
+  const {
+    username = '',
+    password =  '',
+    name =  '',
+    birthday =  '',
+    address =  '',
+    mobilePhone =  ''
+  } = req.body;
+  const existUsername = await hasAlreadyRegisted(username);
+  if (existUsername) { // 账号已存在则提示用户
+    res.send(getResponse(existUsername));
+    return;
+  }
+  const userId = createUserId();
+  insertUser2DB({
+    username,
+    password,
+    userId,
+    name,
+    birthday,
+    address,
+    mobilePhone
+  }).then((users: User[]) => {
+    console.log('插入成功:',users)
   }).catch(e => {
     console.error('doRegister接口')
   });
 };
+
+// 检查用户名是否存在
+export const checkUsername = async (req: Request, res: Response) => {
+  const { username = '' } = req.body;
+  const has = await hasAlreadyRegisted(username);
+  console.log('是否已注册：',has);
+  res.send(getResponse(has));
+  
+}
+// 改用户名是否已注册
+const hasAlreadyRegisted = async (username: string): Promise<boolean> => {
+  return queryUserId(username).then((users: User[]) => {
+    console.log('查询注册user：',users);
+    return  users.length > 0;
+  }).catch((e) => {// 查询出现异常，要视为存在，不允许用户注册
+    console.error(e);
+    return true;
+  });
+}
+
+const getResponse = (has: boolean):ResData.ResDataType  => {
+  return ResData.info({
+    status: 200,
+    message: has ? '该账号已注册，请更换一个新的账号': '操作成功',
+    data: {
+      isRegisted: has ? 1 : 0
+    }
+  })
+}

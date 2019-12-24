@@ -1,12 +1,9 @@
-import kConnection from '../knexHelper';
-import knex, {QueryBuilder, } from 'knex';
+import {QueryBuilder, } from 'knex';
+import {userBuilder} from './index'
 
-import { User } from '../../modal/user';
-
-const userBuilder = ():QueryBuilder => kConnection<User>('user');
 
 // 查询用户，根据username
-export const queryUserIds = (username: string):QueryBuilder => {
+export const queryUserId = (username: string):QueryBuilder => {
   return userBuilder().column(
     { 'userId':'user_id' },
     { 'mobilePhone': 'mobile_phone'},

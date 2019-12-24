@@ -1,7 +1,8 @@
 // 接口白名单
 const whiteList = [
   '/api/doLogin',
-  '/api/login/register',
+  '/api/register',
+  '/api/register/checkUsername',
 ]
 export default whiteList;
 

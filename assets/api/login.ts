@@ -16,3 +16,11 @@ export const registerApi = (data: {username: string, password: string}): AxiosPr
     data: data
   })
 }
+// 检查用户是否存在
+export const checkUsernameApi = (params: {username: string}): AxiosPromise => {
+  return axios({
+    method:'get',
+    url: '/api/register/checkUsername',
+    params: params
+  })
+}
