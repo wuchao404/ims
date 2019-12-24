@@ -37,10 +37,12 @@ export default () => {
       <div className='content_div'>
         <Input 
           placeholder='请输入账号'
+          allowClear={true}
           onBlur={e => $set({ username: e.target.value })}
         />
-        <Input 
+        <Input.Password
           placeholder='请输入密码'
+          allowClear={true}
           onBlur={e => $set({ password: e.target.value })}
         />
         <Button

@@ -24,3 +24,10 @@ export const checkUsernameApi = (params: {username: string}): AxiosPromise => {
     params: params
   })
 }
+// 退出登陆
+export const logoutApi = (): AxiosPromise => {
+  return axios({
+    method:'get',
+    url: '/api/doLogout',
+  })
+}

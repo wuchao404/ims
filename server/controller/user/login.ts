@@ -8,7 +8,6 @@ import { addToken2Redis } from '../../db/redisHelper'
 export const doLogin = (req: Request, res: Response) => {
   const {username = '', password = ''} = req.body;
   queryUserId(username).then((users: User[]) => {
-    
     const noData = resData.error({ message: '未查询到您的账号信息，请注册一个新的账号' });
     const failure = resData.error({ message: '账号密码不匹配，请重新输入' });
     if (users.length === 0) {
