@@ -32,12 +32,11 @@ export default () => {
   // 检查用户名是否存在
   const doCheckUsername = (username: string) => {
     checkUsernameApi({username}).then(res => {
-      const checked = res.data.data.isRegisted === 1;
-      if (checked) {
+      const isRegisted = res.data.data.isRegisted === 1;
+      if (isRegisted) {
         notification.warn({ message: '提示', description: res.data.message, duration: 2});
-      }else {
-        $set({ checked });
       }
+      $set({ checked: !isRegisted });// 未注册的用户才可通过验证
     })
   }
   return (
@@ -55,7 +54,8 @@ export default () => {
           placeholder='请输入密码'
           onBlur={e => $set({ password: e.target.value })}
         />
-        <Button 
+        <Button
+          type='primary'
           loading={state.loading} 
           onClick={doRegister}
           disabled={!state.checked}

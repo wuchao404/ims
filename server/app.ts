@@ -14,5 +14,7 @@ const server: Express = new ExpressServer(app).init();
 
 app.prepare().then(() => {
   server.listen(4000)
+}).catch(e => {
+  console.log('app.js:',e);
 })
 export default server;

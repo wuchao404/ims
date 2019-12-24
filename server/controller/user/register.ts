@@ -4,6 +4,7 @@ import { insertUser2DB } from '../../db/user/register';
 import { queryUserId } from '../../db/user/login';
 import { createUserId } from '../../tools/userTool';
 import * as ResData from '../../../utils/responseData';
+import {ValidateParams} from '../../tools/middleWare/validateParams'
 
 // 注册接口
 export const doRegister = async (req: Request, res: Response) => {
@@ -15,6 +16,10 @@ export const doRegister = async (req: Request, res: Response) => {
     address =  '',
     mobilePhone =  ''
   } = req.body;
+  // 校验必传参数
+  const validate = new ValidateParams({ username, password }).validate(req,res);
+  if (!validate) return;
+
   const existUsername = await hasAlreadyRegisted(username);
   if (existUsername) { // 账号已存在则提示用户
     res.send(getResponse(existUsername));
@@ -30,19 +35,22 @@ export const doRegister = async (req: Request, res: Response) => {
     address,
     mobilePhone
   }).then((users: User[]) => {
-    console.log('插入成功:',users)
+    res.send(ResData.success({ message: '注册成功' }));
   }).catch(e => {
+    res.send(ResData.error());
     console.error('doRegister接口')
   });
 };
 
 // 检查用户名是否存在
 export const checkUsername = async (req: Request, res: Response) => {
-  const { username = '' } = req.body;
+  const { username = '' } = req.query;
+  const validate = new ValidateParams({username}).validate(req,res);
+  if (!validate) return;
+  console.log('username:',username)
   const has = await hasAlreadyRegisted(username);
   console.log('是否已注册：',has);
   res.send(getResponse(has));
-  
 }
 // 改用户名是否已注册
 const hasAlreadyRegisted = async (username: string): Promise<boolean> => {
@@ -58,7 +66,7 @@ const hasAlreadyRegisted = async (username: string): Promise<boolean> => {
 const getResponse = (has: boolean):ResData.ResDataType  => {
   return ResData.info({
     status: 200,
-    message: has ? '该账号已注册，请更换一个新的账号': '操作成功',
+    message: has ? '该账号已注册，请更换一个新的账号': '可以注册',
     data: {
       isRegisted: has ? 1 : 0
     }
