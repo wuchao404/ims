@@ -17,7 +17,11 @@ export const addToken2Redis = (token: string,user: User) => {
     console.log('reply:',reply)
   })
 }
-// 删除redis中的token
+/**
+ * 删除redis中的token
+ * @param token 
+ * @return boolean 是否删除成功
+ */
 export const deleteByToken = (token = ''): boolean => {
   return client.del(token);
 }

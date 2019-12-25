@@ -1,8 +1,8 @@
 import {Request, Response} from 'express';
-import {verifyToken} from '../../utils/jwt';
-import { inWhiteList } from './whiteList';
-import * as ResData from '../../utils/responseData';
-import { existTokenInRedis } from '../db/redisHelper'
+import {verifyToken} from '../../../utils/jwt';
+import { inWhiteList } from '../whiteList';
+import * as ResData from '../../../utils/responseData';
+import { existTokenInRedis } from '../../db/redisHelper'
 
 
 // express自定义拦截器

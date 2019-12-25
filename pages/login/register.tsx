@@ -1,6 +1,6 @@
 import React,{ useEffect,useState } from 'react';
-import {registerApi} from '../../assets/api/login';
-import { Button, Input } from 'antd';
+import {registerApi,checkUsernameApi} from '../../assets/api/login';
+import { Button, Input, notification } from 'antd';
 import './index.less';
 
 export default () => {
@@ -8,7 +8,8 @@ export default () => {
   const initState = {
     loading: false,
     username:'',
-    password:''
+    password:'',
+    checked: false,// 是否可以注册
   };
   const [state, setState] = useState(initState);
 
@@ -24,8 +25,18 @@ export default () => {
       password: state.password
     }).then(res => {
       if (res.data.status === 200) {
-        
+        notification.warn({ message: '提示', description: res.data.message, duration: 2});
       }
+    })
+  }
+  // 检查用户名是否存在
+  const doCheckUsername = (username: string) => {
+    checkUsernameApi({username}).then(res => {
+      const isRegisted = res.data.data.isRegisted === 1;
+      if (isRegisted) {
+        notification.warn({ message: '提示', description: res.data.message, duration: 2});
+      }
+      $set({ checked: !isRegisted });// 未注册的用户才可通过验证
     })
   }
   return (
@@ -33,13 +44,24 @@ export default () => {
       <div className='content_div'>
         <Input 
           placeholder='请输入账号'
-          onBlur={e => $set({ username: e.target.value })}
+          onBlur={e => {
+            const username = e.target.value;
+            $set({ username });
+            doCheckUsername(username);
+          }}
         />
         <Input 
           placeholder='请输入密码'
           onBlur={e => $set({ password: e.target.value })}
         />
-        <Button loading={state.loading} onClick={doRegister}>注册</Button>
+        <Button
+          type='primary'
+          loading={state.loading} 
+          onClick={doRegister}
+          disabled={!state.checked}
+        >
+          注册
+        </Button>
       </div>
     </div>
   )

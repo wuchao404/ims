@@ -5,7 +5,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { UrlWithParsedQuery } from 'url';
 import * as UserCenter from './controller/user';
 import * as Info from './controller/info';
-import {interceptAPI} from './tools/interception'
+import {interceptAPI} from './tools/middleWare/interception'
 
 // express服务
 class ExpressServer {
@@ -23,7 +23,9 @@ class ExpressServer {
   }
   setAPI () {
     this.server.post('/api/doLogin',UserCenter.default.doLogin);
+    this.server.get('/api/doLogout',UserCenter.default.doLogout);
     this.server.post('/api/register',UserCenter.default.doRegister);
+    this.server.get('/api/register/checkUsername',UserCenter.default.checkUsername);
     this.server.get('/api/info/list',Info.getInfoList);// 首页列表
     this.server.all('*',(req: Request,res: Response) => {
       this.handle(req, res);

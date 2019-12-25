@@ -8,7 +8,7 @@ const config:Config = {
     port: 3306,
     user: 'admin',
     password:'123456',
-    database: 'management'
+    database: 'management',
   },
   pool:{// 连接池
     min:1,

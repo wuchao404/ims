@@ -13,13 +13,18 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 })
 axios.interceptors.response.use((response: AxiosResponse) => {
   const { status, message } = response.data;
-  if (status === 40000 || status === 40001 || status === 40002) {
+  if (status === 200) {
+    return response;
+  } else if (status === 40000 || status === 40001 || status === 40002) {
     notification.warn({ message: '提示', description: message, duration: 2});
     jumpToLogin();
+    return Promise.reject(response.data);
   } else if (status >= 400) {
     notification.warn({ message: '提示', description: message, duration: 2});
+    return Promise.reject(response.data);
+  } else {
+    return Promise.reject(response.data);
   }
-  return response;
 },(err: any) => {
   return Promise.reject(err);
 })

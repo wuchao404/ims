@@ -10,7 +10,7 @@ import {loginApi} from '../../assets/api/login'
 interface IForm {
   title: string,
   name?: string, 
-  
+
   [keys: string]: any
 }
 

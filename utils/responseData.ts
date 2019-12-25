@@ -21,3 +21,12 @@ export const error = (info?: ResDataType) => {
   } = info || {};
   return {status,message,data}
 }
+// 一般信息
+export const info = (info?: ResDataType) => {
+  const {
+    status = 200,
+    message='请求成功',
+    data
+  } = info || {};
+  return {status,message,data}
+}
