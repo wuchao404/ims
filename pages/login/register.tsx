@@ -42,6 +42,7 @@ export default () => {
   return (
     <div className='login_div'>
       <div className='content_div'>
+        <img src='/images/vue_logo.png'/>
         <Input 
           placeholder='请输入账号'
           onBlur={e => {
