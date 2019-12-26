@@ -1,21 +1,24 @@
 import React,{useState, useEffect} from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import FormSate from "../components/formItem";
 import './index.less';
 import axios from '../../utils/axios'
 import {setToken} from '../../utils/frontend/storage';
 import Router from 'next/router'
 import routerMap from '../../router/routerMap';
 import {loginApi} from '../../assets/api/login'
+import { userName } from "../../assets/utils/utils";
 
-interface IForm {
-  title: string,
-  name?: string, 
-  [keys: string]: any
-}
+// interface IForm {
+//   title: string,
+//   loginSta: boolean,
+//   name?: string,
+//   [key: string]: any
+// }
 
 
- function formmart (props: IForm) {
-  props.loginSta
+
+ function formmart (props: any) {
   useEffect(() => {
     console.log(props)
   });
@@ -53,10 +56,32 @@ interface IForm {
       }
     });
   };
+  function FormSateUser (props:any){
+    const validFunction = (rule:any, val:any ,callback:any) => {
+        if (!userName(val)) { // 正则验证
+            callback('请输入正确的用户名'); // 校验未通过
+        }
+        callback(); // 校验通过
+    }
+    return(
+      <FormSate 
+      getFieldDecorator ={getFieldDecorator}
+      prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+      formId="username"
+      type="text"
+      validator={validFunction}
+      placeholder="请输入用户名"
+      ></FormSate>
+    )
+  }
+  
   
   return (
     <div className="login_div">
-      <Form onSubmit={handleSubmit} className="content_div">
+      <FormSateUser  getFieldDecorator ={getFieldDecorator}></FormSateUser>
+
+      
+      {/* <Form onSubmit={handleSubmit} className="content_div">
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, 
@@ -70,8 +95,8 @@ interface IForm {
               onBlur={e => $set({ username: e.target.value })}
             />,
           )}
-        </Form.Item>
-        <Form.Item>
+        </Form.Item> */}
+        {/* <Form.Item>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Please input your Password!' }],
           })(
@@ -82,8 +107,8 @@ interface IForm {
               onBlur={e => $set({ password: e.target.value })}
             />,
           )}
-        </Form.Item>
-        <Form.Item>
+        </Form.Item> */}
+        {/* <Form.Item>
           {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true
@@ -99,8 +124,8 @@ interface IForm {
             Log in
           </Button>
           Or <a href="">register now!</a>
-        </Form.Item>
-      </Form>
+        </Form.Item> */}
+      {/* </Form> */}
     </div>
    
   )
