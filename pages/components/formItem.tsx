@@ -6,7 +6,7 @@ const FormItem = Form.Item;
 function formItems(props: any) {
 	useEffect(() => {
 		console.log(props)
-	})
+	},[])
 	const {
 		//表单绑定
 		getFieldDecorator,
@@ -32,7 +32,6 @@ function formItems(props: any) {
 					required: mustfill,
 					message: message
 				}, {
-					validator: validator
 				}],
 			})(
 				<Input placeholder={placeholder} prefix={prefix} type={type} />
