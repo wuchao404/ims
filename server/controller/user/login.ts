@@ -3,7 +3,8 @@ import {queryUserId} from '../../db/user/login'
 import {resData} from '../../../utils/common';
 import { User } from '../../modal/user';
 import { createJwtToken, verifyToken } from '../../../utils/jwt'
-import { addToken2Redis } from '../../db/redisHelper'
+import { addToken2Redis } from '../../db/redisHelper';
+import { compareMd5 } from '../../tools/userTool'
 
 export const doLogin = (req: Request, res: Response) => {
   const {username = '', password = ''} = req.body;
@@ -12,7 +13,7 @@ export const doLogin = (req: Request, res: Response) => {
     const failure = resData.error({ message: '账号密码不匹配，请重新输入' });
     if (users.length === 0) {
       res.send(noData);
-    }else if (users.length === 1 && users[0].password === password){
+    }else if (users.length === 1 && compareMd5(password, users[0].password)){
       const token = createJwtToken(users[0]);
       addToken2Redis(token,users[0])
       const decode = verifyToken(token);

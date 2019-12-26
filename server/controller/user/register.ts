@@ -4,7 +4,8 @@ import { insertUser2DB } from '../../db/user/register';
 import { queryUserId } from '../../db/user/login';
 import { createUserId } from '../../tools/userTool';
 import * as ResData from '../../../utils/responseData';
-import {ValidateParams} from '../../tools/middleWare/validateParams'
+import {ValidateParams} from '../../tools/middleWare/validateParams';
+import { encryptMd5Pwd } from '../../tools/userTool'
 
 // 注册接口
 export const doRegister = async (req: Request, res: Response) => {
@@ -19,7 +20,7 @@ export const doRegister = async (req: Request, res: Response) => {
   // 校验必传参数
   const validate = new ValidateParams({ username, password }).validate(req,res);
   if (!validate) return;
-
+  // 检查用户名是否存在
   const existUsername = await hasAlreadyRegisted(username);
   if (existUsername) { // 账号已存在则提示用户
     res.send(getResponse(existUsername));
@@ -28,7 +29,7 @@ export const doRegister = async (req: Request, res: Response) => {
   const userId = createUserId();
   insertUser2DB({
     username,
-    password,
+    password: encryptMd5Pwd(password),
     userId,
     name,
     birthday,
@@ -38,7 +39,7 @@ export const doRegister = async (req: Request, res: Response) => {
     res.send(ResData.success({ message: '注册成功' }));
   }).catch(e => {
     res.send(ResData.error());
-    console.error('doRegister接口')
+    console.error(req.originalUrl, e);
   });
 };
 

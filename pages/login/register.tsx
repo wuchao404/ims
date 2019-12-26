@@ -2,6 +2,7 @@ import React,{ useEffect,useState } from 'react';
 import {registerApi,checkUsernameApi} from '../../assets/api/login';
 import { Button, Input, notification } from 'antd';
 import './index.less';
+import { jumpToLogin } from '../../router/redirect'
 
 export default () => {
 
@@ -26,6 +27,7 @@ export default () => {
     }).then(res => {
       if (res.data.status === 200) {
         notification.warn({ message: '提示', description: res.data.message, duration: 2});
+        jumpToLogin();
       }
     })
   }
