@@ -18,6 +18,7 @@ function formItems(props: any) {
 		formId,
 		//图形化
 		hasFeedback,
+		onBlur,
 		rules
 	} = props
 	return (
@@ -26,7 +27,7 @@ function formItems(props: any) {
 				initialValue,
 				rules,
 			})(
-				<Input placeholder={placeholder} prefix={prefix} type={type} />
+				<Input placeholder={placeholder} onBlur={onBlur}  prefix={prefix} type={type} />
 			)}
 		</FormItem>
 	)

@@ -9,7 +9,7 @@ import routerMap from '../../router/routerMap';
 import { loginApi } from '../../assets/api/login'
 import { userName } from "../../assets/utils/pattern";
 
-function formMart(props: any) {
+const formLogin=(props: any) =>{
   const { getFieldDecorator, validateFields } = props.form;
   // 登录接口
   const doLogin = () => {
@@ -36,15 +36,8 @@ function formMart(props: any) {
     }
     callback(); // 校验通过
   }
-  const validPassWord = (rule: any, val: any, callback: any) => {
-    let loginpass = props.form.getFieldValue('password');
-    if (val && val !== '' && loginpass && loginpass !== val) {
-      callback(new Error('两次密码输入不一致'))
-      return
-    } else {
-      callback();
-    }
-  }
+  
+  
   //判断表单是否为空
   const fieldsValue = props.form.getFieldsValue()
   const disabled = Object.keys(fieldsValue).filter((v: any) => fieldsValue[v] !== '' && fieldsValue[v] !== undefined)
@@ -52,6 +45,7 @@ function formMart(props: any) {
   return (
     <div className="login_div">
       <Form>
+        <img src="/images/login.jpg" />
         <FormInput
           getFieldDecorator={getFieldDecorator}
           prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -80,21 +74,7 @@ function formMart(props: any) {
             validator: validUser
           }]}
         ></FormInput>
-        <FormInput
-          getFieldDecorator={getFieldDecorator}
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          formId="againPassWord"
-          type="password"
-          message="再次输入密码不能为空"
-          hasFeedback={true}
-          placeholder="请再次输入密码"
-          rules={[{
-            required: true,
-            message: "密码不能为空"
-          }, {
-            validator: validPassWord
-          }]}
-        ></FormInput>
+        
         <Button type="primary"
           onClick={doLogin}
           className="login-form-button"
@@ -102,8 +82,11 @@ function formMart(props: any) {
         >
           登录
       </Button>
+      <p className="register">
+        <a href="/login/register">立即注册</a>
+      </p>
       </Form>
     </div>
   )
 }
-export default Form.create()(formMart)
+export default Form.create()(formLogin)
