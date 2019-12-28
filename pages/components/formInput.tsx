@@ -3,7 +3,7 @@ import { Form, Icon, Input, Button, Checkbox, Col, message } from 'antd';
 
 const FormItem = Form.Item;
 
-function formItems(props: any) {
+function formInput(props: any) {
 	const {
 		//表单绑定
 		getFieldDecorator,
@@ -18,18 +18,21 @@ function formItems(props: any) {
 		formId,
 		//图形化
 		hasFeedback,
-		onBlur,
-		rules
+		rules,
+		//表单触发时间
+		validateTrigger,
+		className
 	} = props
 	return (
 		<FormItem  hasFeedback={hasFeedback}>
 			{getFieldDecorator(formId, {
 				initialValue,
 				rules,
+				validateTrigger
 			})(
-				<Input placeholder={placeholder} onBlur={onBlur}  prefix={prefix} type={type} />
+				<Input placeholder={placeholder} className={className}  prefix={prefix} type={type} />
 			)}
 		</FormItem>
 	)
 }
-export default formItems;
+export default formInput;

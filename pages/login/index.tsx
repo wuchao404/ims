@@ -36,8 +36,6 @@ const formLogin=(props: any) =>{
     }
     callback(); // 校验通过
   }
-  
-  
   //判断表单是否为空
   const fieldsValue = props.form.getFieldsValue()
   const disabled = Object.keys(fieldsValue).filter((v: any) => fieldsValue[v] !== '' && fieldsValue[v] !== undefined)
@@ -74,7 +72,6 @@ const formLogin=(props: any) =>{
             validator: validUser
           }]}
         ></FormInput>
-        
         <Button type="primary"
           onClick={doLogin}
           className="login-form-button"
@@ -82,9 +79,9 @@ const formLogin=(props: any) =>{
         >
           登录
       </Button>
-      <p className="register">
-        <a href="/login/register">立即注册</a>
-      </p>
+        <p className="register">
+          <a href="/login/register">立即注册</a>
+        </p>
       </Form>
     </div>
   )
