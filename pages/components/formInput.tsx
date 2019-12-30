@@ -5,7 +5,6 @@ const FormItem = Form.Item;
 
 function formInput(props: any) {
 	const {
-		//表单绑定
 		getFieldDecorator,
 		placeholder,
 		//默认值
@@ -21,6 +20,7 @@ function formInput(props: any) {
 		rules,
 		//表单触发时间
 		validateTrigger,
+
 		className
 	} = props
 	return (
