@@ -115,6 +115,7 @@ export const formRegister = (props: any) => {
   }
   //校验验证码
   const validPhoneCode = (rule: any, val: any, callback: any) => {
+    console.log(val)
     if (val !== "") {
       if (!phoneTestCode(val)) { // 正则验证
         callback('请输入正确的手机验证码'); // 校验未通过
@@ -199,11 +200,11 @@ export const formRegister = (props: any) => {
             getFieldDecorator={getFieldDecorator}
             prefix={<Icon type="database" style={{ color: 'rgba(0,0,0,.25)' }} />}
             formId="phoneCode"
-            type="number"
+            type="text"
             placeholder="请输入手机验证码"
             hasFeedback={false}
+            validateTrigger='onBlur'
             rules={[{
-              type: 'number',
               required: false,
               message: "手机验证码不能为空"
             }, {
