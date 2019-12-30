@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Input, notification, Icon, Form } from 'antd';
-import FormInput from "../components/formInput";
 import { registerApi, checkUsernameApi } from '../../assets/api/login';
 import './register.less';
 import { jumpToLogin } from '../../router/redirect'
@@ -11,13 +10,13 @@ export const formRegister = (props: any) => {
     console.log(props)
   }, [])
   const { getFieldDecorator, validateFields, getFieldValue } = props.form;
-
+  const FormItem = Form.Item;
   const initState = {
     loading: false,
     phoneDisable: true,//发送验证码按钮是否可点击
     checked: false,// 是否可以注册,
-    timer:10,
-    btnText:"发送验证码"
+    timer: 10,
+    btnText: "发送验证码"
 
   };
   const [state, setState] = useState(initState);
@@ -95,23 +94,23 @@ export const formRegister = (props: any) => {
   //倒计时
   const count = () => {
     let siv = setInterval(() => {
-        $set({ timer: (state.timer--), btnText: state.timer, phoneDisable: true })
-        if (state.timer === 0) {
-            clearInterval(siv);
-            $set({ btnText: '重新发送', phoneDisable: false })
-            $set({timer: 10 })
-        }
-        console.log(state.timer)
+      $set({ timer: (state.timer--), btnText: state.timer, phoneDisable: true })
+      if (state.timer === 0) {
+        clearInterval(siv);
+        $set({ btnText: '重新发送', phoneDisable: false })
+        $set({ timer: 10 })
+      }
+      console.log(state.timer)
     }, 1000);
-    
+
   }
   //发送验证码
   const verificationCode = () => {
     let phonecode = props.form.getFieldValue("phone")
     console.log(phonecode)
     //当发送验证码成功时
-      count()
-    
+    count()
+
   }
   //校验验证码
   const validPhoneCode = (rule: any, val: any, callback: any) => {
@@ -129,89 +128,106 @@ export const formRegister = (props: any) => {
       <div className='content_div'>
         <Form>
           <img src='/images/register.jpeg' />
-          <FormInput
-            getFieldDecorator={getFieldDecorator}
-            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            formId="userName"
-            type="text"
-            placeholder="请输入用户名"
-            hasFeedback={false}
-            rules={[{
-              required: false,
-              message: "用户名不能为空"
-            }, {
-              validator: validUser
-            }]}
-            validateTrigger='onBlur'
-          ></FormInput>
-          <FormInput
-            getFieldDecorator={getFieldDecorator}
-            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            formId="passWord"
-            type="password"
-            placeholder="请输入密码"
-            hasFeedback={false}
-            rules={[{
-              required: false,
-              message: "密码不能为空"
-            }]}
-          ></FormInput>
-          <FormInput
-            getFieldDecorator={getFieldDecorator}
-            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            formId="againPassWord"
-            type="password"
-            message="再次输入密码不能为空"
-            hasFeedback={false}
-            placeholder="请再次输入密码"
-            rules={[{
-              required: false,
-              message: "密码不能为空"
-            }, {
-              validator: validPassWord
-            }]}
-          ></FormInput>
-          <div className="phone-context">
-            <FormInput
-              getFieldDecorator={getFieldDecorator}
-              prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              formId="phone"
-              type="text"
-              placeholder="请输入手机号"
-              hasFeedback={false}
-              validateTrigger='onBlur'
-              className="phone-text"
-              rules={[{
+          <FormItem hasFeedback={true}>
+            {getFieldDecorator('userName', {
+              required: true,
+              validateTrigger: 'onBlur',
+              rules: [{
                 required: false,
-                message: "手机号不能为空"
+                message: "用户名不能为空"
               }, {
-                validator: validPhone
-              }]}
-            ></FormInput>
+                validator: validUser
+              }]
+            })(
+              <Input
+                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                type="text"
+                placeholder="请输入用户名"
+              />
+            )}
+          </FormItem>
+          <FormItem hasFeedback={true}>
+            {getFieldDecorator('passWord', {
+              required: true,
+              validateTrigger: 'onBlur',
+              rules: [{
+                required: false,
+                message: "密码不能为空"
+              }]
+            })(
+              <Input
+                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                type="password"
+                placeholder="请输入密码"
+              />
+            )}
+          </FormItem>
+          <FormItem hasFeedback={true}>
+            {getFieldDecorator('againPassWord', {
+              required: true,
+              validateTrigger: 'onBlur',
+              rules: [{
+                required: false,
+                message: "密码不能为空"
+              }, {
+                validator: validPassWord
+              }]
+            })(
+              <Input
+                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                type="password"
+                placeholder="请再次输入密码"
+              />
+            )}
+          </FormItem>
+          <div className="phone-context">
+            <FormItem hasFeedback={true}>
+              {getFieldDecorator('phone', {
+                required: true,
+                validateTrigger: 'onBlur',
+                rules: [{
+                  required: false,
+                  message: "手机号不能为空"
+                }, {
+                  validator: validPhone
+                }]
+              })(
+                <Input
+                  prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  type="text"
+                  className="phone-text"
+                  placeholder="请输入手机号"
+                />
+              )}
+            </FormItem>
             <Button type="default"
               onClick={verificationCode}
               className="phone-button"
               disabled={state.phoneDisable}
             >
-               {state.btnText}
-          </Button>
+              {state.btnText}
+            </Button>
           </div>
-          <FormInput
-            getFieldDecorator={getFieldDecorator}
-            prefix={<Icon type="database" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            formId="phoneCode"
-            type="text"
-            placeholder="请输入手机验证码"
-            hasFeedback={false}
-            validateTrigger='onBlur'
-            rules={[{
-              required: false,
-              message: "手机验证码不能为空"
-            }, {
-              validator: validPhoneCode
-            }
-            ]}
-          ></FormInput>
+          <FormItem hasFeedback={true}>
+            {getFieldDecorator('phoneCode', {
+              required: true,
+              validateTrigger: 'onBlur',
+              rules: [{
+                required: false,
+                message: "手机验证码不能为空"
+              }, {
+                validator: validPhoneCode
+              }
+              ]
+            })(
+              <Input
+                prefix={<Icon type="database" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                type="text"
+                className="phone-text"
+                placeholder="请输入手机验证码"
+              />
+            )}
+          </FormItem>
           <Button type="primary"
             onClick={doRegister}
             className="login-form-button"

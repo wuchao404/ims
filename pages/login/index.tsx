@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import FormInput from "../components/formInput";
 import './index.less';
 import axios from '../../utils/axios'
 import { setToken } from '../../utils/frontend/storage';
@@ -9,8 +8,9 @@ import routerMap from '../../router/routerMap';
 import { loginApi } from '../../assets/api/login'
 import { userName } from "../../assets/utils/pattern";
 
-const formLogin=(props: any) =>{
+const formLogin = (props: any) => {
   const { getFieldDecorator, validateFields } = props.form;
+  const FormItem = Form.Item;
   // 登录接口
   const doLogin = () => {
     //判断表单验证
@@ -44,34 +44,42 @@ const formLogin=(props: any) =>{
     <div className="login_div">
       <Form>
         <img src="/images/login.jpg" />
-        <FormInput
-          getFieldDecorator={getFieldDecorator}
-          prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          formId="userName"
-          type="text"
-          placeholder="请输入用户名"
-          hasFeedback={true}
-          rules={[{
+        <FormItem hasFeedback={true}>
+          {getFieldDecorator('userName', {
             required: true,
-            message: "密码不能为空"
-          }, {
-            validator: validUser
-          }]}
-        ></FormInput>
-        <FormInput
-          getFieldDecorator={getFieldDecorator}
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          formId="passWord"
-          type="password"
-          placeholder="请输入密码"
-          hasFeedback={true}
-          rules={[{
+            validateTrigger: 'onBlur',
+            rules: [{
+              message: "密码不能为空"
+            }, {
+              validator: validUser
+            }],
+
+          })(
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="text"
+              placeholder="请输入用户名"
+            />
+          )}
+        </FormItem>
+        <FormItem hasFeedback={true}>
+          {getFieldDecorator('passWord', {
             required: true,
-            message: "密码不能为空"
-          }, {
-            validator: validUser
-          }]}
-        ></FormInput>
+            validateTrigger: 'onBlur',
+            rules: [{
+              required: true,
+              message: "密码不能为空"
+            }, {
+              validator: validUser
+            }]
+          })(
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="password"
+              placeholder="请输入密码"
+            />
+          )}
+        </FormItem>
         <Button type="primary"
           onClick={doLogin}
           className="login-form-button"
