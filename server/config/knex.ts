@@ -6,7 +6,7 @@ const config:Config = {
   connection: {
     host: configs.mysqlHost,
     port: 3306,
-    user: 'admin',
+    user: configs.mysqlUser,
     password:configs.mysqlPwd,
     database: 'management',
   },
