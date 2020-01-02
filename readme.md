@@ -25,11 +25,15 @@ app.post('/profile', upload.array(), function (req, res, next) {
 });
 ```
 
-# 4.[使用Knex.js进行Mysql的ORM操作，快速执行sql](http://knexjs.org/#Installation)
+# 4.1[使用Knex.js进行Mysql的ORM操作，快速执行sql](http://knexjs.org/#Installation)
 - 1.[kenx基础语法](http://knexjs.org/#Builder-identifier-syntax)
 - 2.[knex调试模式，自动打印sql语句](http://knexjs.org/#Installation-debug)
 - 3.[使用column给表字段起别名，将下划线的命名形式改为驼峰式](http://knexjs.org/#Builder-column)
-- 
+
+# 4.2 [使用纯ORM框架sequelize替代Knex框架]](https://sequelize.org/v5/)
+- 1.[构造函数参数详解](https://sequelize.org/v5/class/lib/sequelize.js~Sequelize.html#instance-constructor-constructor)
+- 2.
+
 # 5.redis使用
 - 1.[安装redis，并在命令行中测试](https://redis.io/download)
 - 2.[redis配置远程登录+密码登录](https://blog.csdn.net/weixin_38628533/article/details/81074895)

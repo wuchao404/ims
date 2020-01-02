@@ -1,4 +1,5 @@
 import { User, DecodeUser } from './../server/modal/user';
+import { UserModel } from './../server/modal/userModel';
 import jwt from 'jsonwebtoken';
 import { jwtSecret } from '../server/config'
 
@@ -7,7 +8,7 @@ import { jwtSecret } from '../server/config'
  * @param user 用户信息
  * @return string
  */
-export const createJwtToken = (user: User): string => {
+export const createJwtToken = (user: User | UserModel): string => {
   user.password && delete user.password;
   return jwt.sign({...user},jwtSecret,{
     expiresIn: '24h', // 一天
