@@ -1,3 +1,4 @@
+// 白名单，这些页面不需要token也可以访问
 const whiteList = [
   '/login',
   '/login/register',
@@ -10,5 +11,5 @@ export default whiteList;
  * @return boolean
  */
 export const inWhiteList = (pathname =''): boolean => {
-  return whiteList.findIndex(path => path === pathname) > 0;
+  return whiteList.findIndex(path => path === pathname) >= 0;
 }

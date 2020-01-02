@@ -5,7 +5,7 @@ import './style/main.less'
 
 const Main = (props: any) => {
   const {
-    children
+    children,
   } = props;
   return (
     <div className='main_div'>
