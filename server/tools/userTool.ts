@@ -15,9 +15,9 @@ export const encryptMd5Pwd = (password: string): string => {
 
 /**
  * 比较明文加密后是否跟密文完全一样
- * @param unencrypt 明文
+ * @param decryption 明文
  * @param md5 密文
  */
-export const compareMd5 = (unencrypt: string, md5: string) => {
-  return encryptMd5Pwd(unencrypt) === md5;
+export const compareMd5 = (decryption: string, md5: string) => {
+  return encryptMd5Pwd(decryption) === md5;
 }

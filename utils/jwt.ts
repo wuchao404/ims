@@ -8,7 +8,7 @@ import { jwtSecret } from '../server/config'
  * @param user 用户信息
  * @return string
  */
-export const createJwtToken = (user: User | UserModel): string => {
+export const createJwtToken = (user: User): string => {
   user.password && delete user.password;
   return jwt.sign({...user},jwtSecret,{
     expiresIn: '24h', // 一天
