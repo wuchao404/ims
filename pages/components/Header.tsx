@@ -5,7 +5,7 @@ const linkStyle = {
 };
 
 const Header = () => (
-  <div>
+  <div style={{height: 60, background: 'red'}}>
     <Link href="/">
       <a style={linkStyle}>Home</a>
     </Link>

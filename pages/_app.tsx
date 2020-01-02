@@ -4,7 +4,8 @@ import '../assets/style.less';
 import Router from 'next/router';
 import { inWhiteList } from '../router/whiteList';
 import { hasToken } from '../utils/frontend/storage';
-import { jumpToLogin } from '../router/redirect'
+import { jumpToLogin } from '../router/redirect';
+import Main from './components/Main'
 
 // 重写_app.js,详情查看 https://nextjs.org/docs#custom-app
 export default (props: any) => {
@@ -29,6 +30,9 @@ export default (props: any) => {
     }
   }, []);
   
-
-  return <Component {...pageProps} />
+  return (
+    <Main>
+      <Component {...pageProps} />
+    </Main>
+  )
 }
