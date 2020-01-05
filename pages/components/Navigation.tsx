@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style/navigation.less'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { string } from 'prop-types';
 
 const Navigation = (props: any) => {
 
@@ -142,7 +143,12 @@ const Navigation = (props: any) => {
         key: '/permission'
     },
 ]
-const initState = {
+interface StateType {
+  openKeys: string,
+  menuTreeNode:any[],
+  rootSubmenuKeys: string[]
+}
+const initState: StateType = {
   openKeys: '',
   menuTreeNode:[],
   rootSubmenuKeys:[]
@@ -186,7 +192,15 @@ const renderMenu = (data:any)=>{
         </Menu.Item>
       )
     }else{
+      // 错误写法
       // state.rootSubmenuKeys.push(item.key)
+      // 正确的写法
+      $set({
+        rootSubmenuKeys: [
+          ...state.rootSubmenuKeys,
+          item.key
+        ]
+      });
       return(
         <SubMenu
           key={item.key}
