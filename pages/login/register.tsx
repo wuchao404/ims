@@ -124,7 +124,7 @@ export const formRegister = (props: any) => {
     callback(); // 校验通过
   }
   return (
-    <div className='login_div'>
+    <div className='register_div'>
       <div className='content_div'>
         <Form>
           <img src='/images/register.jpeg' />

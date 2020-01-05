@@ -1,9 +1,9 @@
 import React,{ useEffect,useState } from 'react';
-import {homeListApi} from '../assets/api/home'
-import {logoutApi} from '../assets/api/login'
+import {homeListApi} from '../../assets/api/home'
+import {logoutApi} from '../../assets/api/login'
 import { Button } from 'antd';
-import {clearAllStorage} from '../utils/frontend/storage';
-import {jumpToLogin} from '../router/redirect'
+import {clearAllStorage} from '../../utils/frontend/storage';
+import {jumpToLogin} from '../../router/redirect'
 
 export default () => {
   const initState = {

@@ -33,6 +33,7 @@ app.post('/profile', upload.array(), function (req, res, next) {
 # 5.redis使用
 - 1.[安装redis，并在命令行中测试](https://redis.io/download)
 - 2.[redis配置远程登录+密码登录](https://blog.csdn.net/weixin_38628533/article/details/81074895)
+- 3.[redis安装和自动启动](https://www.cnblogs.com/zuidongfeng/p/8032505.html)
 
 # 6.jwt-token使用
 - 1.[jsonwebtoken官方地址](https://github.com/auth0/node-jsonwebtoken)
