@@ -43,7 +43,8 @@ export const doLogin = (req: Request, res: Response) => {
     if (users.length === 0) {
       res.send(noData);
     }else if (users.length === 1){
-      const user = <UserModel>users[0].get();// 获取实例
+      const user = <User>users[0].get();// 获取实例
+      console.log('创建时间：',users[0].createTimeFormat);
       if (compareMd5(password, user.password)) {
         const token = createJwtToken(user);
         addToken2Redis(token,user)

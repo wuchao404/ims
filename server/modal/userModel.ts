@@ -1,9 +1,9 @@
-import {Model, DataTypes} from 'sequelize';
-import sequelize from '../db/sequelizeHelper';
+import { DataTypes } from 'sequelize';
+import { modelOptions } from '../db/sequelizeHelper';
 import {User} from './user';
-import {BaseTime} from './BaseModel'
+import {BaseModel} from './BaseModel';
 
-export class UserModel extends Model implements User,BaseTime {
+export class UserModel extends BaseModel implements User {
   public username!: string;
   public password!: string;
   public userId!: string;
@@ -11,9 +11,6 @@ export class UserModel extends Model implements User,BaseTime {
   public birthday!: string;
   public address!: string;
   public mobilePhone!: string;
-  public createTime?: string;
-  public UpdateTime?: string;
-  
 }
 UserModel.init({
   userId: { type: DataTypes.STRING, defaultValue:'', allowNull: false, unique: true, primaryKey: true },
@@ -23,14 +20,8 @@ UserModel.init({
   birthday: { type: DataTypes.STRING, defaultValue:'', allowNull: true },
   address: { type: DataTypes.STRING, defaultValue:'', allowNull: true },
   mobilePhone: { type: DataTypes.STRING, defaultValue:'', allowNull: true },
-  createTime: { type: DataTypes.DATE, defaultValue:'', allowNull: true },
-  UpdateTime: { type: DataTypes.DATE, defaultValue:'', allowNull: true },
 },{
-  sequelize,
+  ...modelOptions,
   modelName: 'userModel',
   tableName:'user',
-  underscored: true,
-  createdAt: false,
-  updatedAt: false,
-  deletedAt: false,
 });
