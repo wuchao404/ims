@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './style/navigation.less'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { string } from 'prop-types';
+import Link from 'next/link';
 
 const Navigation = (props: any) => {
 
@@ -10,7 +11,7 @@ const Navigation = (props: any) => {
   const MenuConfig = [
     {
         title:'首页',
-        key:'/admin/home',
+        key:'/login',
         icon:'pie-chart'
     },
     {
@@ -20,7 +21,7 @@ const Navigation = (props: any) => {
         children:[
             {
                 title: '按钮',
-                key: '/ui/buttons',
+                key: '/login/register',
 
             },
             {
@@ -143,13 +144,14 @@ const Navigation = (props: any) => {
         key: '/permission'
     },
 ]
+const rootSubmenuKeys: string | any[]=[]
 interface StateType {
-  openKeys: string,
+  openKeys: string[],
   menuTreeNode:any[],
   rootSubmenuKeys: string[]
 }
 const initState: StateType = {
-  openKeys: '',
+  openKeys: [],
   menuTreeNode:[],
   rootSubmenuKeys:[]
 };
@@ -162,23 +164,21 @@ const $set = (curState: any) => {
 
   useEffect(()=>{
    const menuTreeNode=renderMenu(MenuConfig)
-    $set({menuTreeNode})
+   $set({menuTreeNode})
   },[])
   
   const onOpenChange = (openKeys:any) => {
-    
-    
     const latestOpenKey= openKeys.find((key: string) => state.openKeys.indexOf(key) === -1);
-    console.log(state.openKeys)
-    console.log(openKeys)
-    // console.log(latestOpenKey)
-    // if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-    //   $set({ openKeys });
-    // } else {
-    //   $set({
-    //     openKeys: latestOpenKey ? [latestOpenKey] : [],
-    //   });
-    // }
+    console.log(latestOpenKey)
+    if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      console.log(openKeys)
+      $set({ openKeys });
+    } else {
+      $set({
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
+      });
+      console.log(state.openKeys)
+    }
   };
 const renderMenu = (data:any)=>{
   return data.map((item:any)=>{
@@ -188,19 +188,18 @@ const renderMenu = (data:any)=>{
           {
             item.icon?<Icon type={item.icon}/> : ""
           }
-          <span>{item.title}</span>
+         <Link prefetch  href={item.key}>
+           <span> 
+             {item.title}
+          </span>
+          </Link> 
         </Menu.Item>
       )
     }else{
       // 错误写法
-      // state.rootSubmenuKeys.push(item.key)
-      // 正确的写法
-      $set({
-        rootSubmenuKeys: [
-          ...state.rootSubmenuKeys,
-          item.key
-        ]
-      });
+      rootSubmenuKeys.push(item.key)
+      // // 正确的写法
+      
       return(
         <SubMenu
           key={item.key}
@@ -221,7 +220,12 @@ const renderMenu = (data:any)=>{
     }
     
     
-  })
+  },
+  $set({
+    rootSubmenuKeys
+  }),
+  // console.log(rootSubmenuKeys)
+  )
 }
   return (
     <div className="navigation_div">
