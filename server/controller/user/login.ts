@@ -1,12 +1,13 @@
 import {Request, Response} from 'express';
-import {queryUserId} from '../../db/user/login'
+import {queryUserId, queryUserId1} from '../../db/user/login'
 import {resData} from '../../../utils/common';
 import { User } from '../../modal/user';
 import { createJwtToken, verifyToken } from '../../../utils/jwt'
 import { addToken2Redis } from '../../db/redisHelper';
-import { compareMd5 } from '../../tools/userTool'
+import { compareMd5 } from '../../tools/userTool';
+import { UserModel } from '../../modal/userModel'
 
-export const doLogin = (req: Request, res: Response) => {
+export const doLogin1 = (req: Request, res: Response) => {
   const {username = '', password = ''} = req.body;
   queryUserId(username).then((users: User[]) => {
     const noData = resData.error({ message: '未查询到您的账号信息，请注册一个新的账号' });
@@ -25,6 +26,40 @@ export const doLogin = (req: Request, res: Response) => {
       res.send(success);
     } else {
       res.send(failure);
+    }
+  }).catch(e => {
+    console.error('doLogin:',e)
+    const err = resData.error({ message: '未查询到数据'});
+    res.send(err);
+  })
+}
+
+export const doLogin = (req: Request, res: Response) => {
+  const {username = '', password = ''} = req.body;
+  queryUserId1(username).then((users: UserModel[]) => {
+    const noData = resData.error({ message: '未查询到您的账号信息，请注册一个新的账号' });
+    const failure = resData.error({ message: '账号密码不匹配，请重新输入' });
+    const multiErr = resData.error({ message: '系统查询到多个账号，请联系客服' });
+    if (users.length === 0) {
+      res.send(noData);
+    }else if (users.length === 1){
+      const user = <User>users[0].get();// 获取实例
+      console.log('创建时间：',users[0].createTimeFormat);
+      if (compareMd5(password, user.password)) {
+        const token = createJwtToken(user);
+        addToken2Redis(token,user)
+        const decode = verifyToken(token);
+        console.log('decode-user:',decode)
+        const success = resData.success({ 
+          message: '登陆成功', 
+          data: { token } 
+        });
+        res.send(success);
+      }else {
+        res.send(failure);
+      }
+    } else {
+      res.send(multiErr);
     }
   }).catch(e => {
     console.error('doLogin:',e)

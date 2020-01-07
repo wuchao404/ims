@@ -17,25 +17,4 @@ export interface DecodeUser extends User {
   aud?: string, // audience 用户
   sub?: string // subject 主题
 }
-// 下划线形式
-export interface UserUnderline {
-  user_id: string,
-  username: string, 
-  password: string, 
-  name: string, 
-  birthday: string, 
-  address: string, 
-  mobile_phone: string
-}
-// 驼峰形式转下划线形式
-export const formatCamel2Underline = (user: User): UserUnderline => {
-  return {
-    user_id: user.userId || '',
-    username: user.username || '', 
-    password: user.password || '', 
-    name: user.name || '', 
-    birthday: user.birthday || '', 
-    address: user.address || '', 
-    mobile_phone: user.mobilePhone || ''
-  }
-}
+

@@ -4,18 +4,17 @@ import Header from './Header';
 import './style/main.less'
 
 const Main = (props: any) => {
-  console.log(props.children)
   const {
-    children
+    children,
   } = props;
-  return ( 
+  return (
     <div className='main_div'>
       <Navigation />
       <div className='right_div'>
         <Header />
-        <div className='container_div' >{ children }</div>
+        <div className='container_div'>{ children }</div>
       </div>
-    </div>  
+    </div>
   )
 }
 

@@ -1,4 +1,5 @@
 import { User, DecodeUser } from './../server/modal/user';
+import { UserModel } from './../server/modal/userModel';
 import jwt from 'jsonwebtoken';
 import { jwtSecret } from '../server/config'
 
