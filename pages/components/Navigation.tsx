@@ -10,81 +10,93 @@ const Navigation = (props: any) => {
 
   const { Header, Content, Footer, Sider } = Layout;
   const { SubMenu } = Menu;
-
-interface StateType {
-  openKeys: string[],
-  menuTreeNode:any[],
-  rootSubmenuKeys: string[]
-}
-const initState: StateType = {
-  openKeys: [],
-  menuTreeNode:[],
-  rootSubmenuKeys:[]
-};
-const [state, setState] = useState(initState);
-// setState方法
-const $set = (curState: any) => {
-  if (typeof curState !== 'object') return;
-  setState(preState => ({ ...preState, ...curState }))
-};
   const Router = useRouter();
+
+  interface StateType {
+    openKeys: string[],
+    menuTreeNode:any[],
+    rootSubmenuKeys: string[]
+  }
+  const initState: StateType = {
+    openKeys: [],
+    menuTreeNode:[],
+    rootSubmenuKeys:[]
+  };
+  const [state, setState] = useState(initState);
+  // setState方法
+  const $set = (curState: any) => {
+    if (typeof curState !== 'object') return;
+    setState(preState => ({ ...preState, ...curState }))
+  };
+  
   useEffect(()=>{
-   const menuTreeNode=renderMenu(MenuConfig)
-   $set({menuTreeNode})
+    const menuTreeNode=renderMenu(MenuConfig)
+    $set({menuTreeNode})
+    initOpenKeys();
   },[])
   
-  const onOpenChange = (openKeys:any) => {
-    const latestOpenKey= openKeys.find((key: string) => state.openKeys.indexOf(key) === -1);
-    console.log(latestOpenKey)
-    if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      console.log(openKeys)
-      $set({ openKeys });
-    } else {
-      $set({
-        openKeys: latestOpenKey ? [latestOpenKey] : [],
-      });
-      console.log(state.openKeys)
-    }
+  const onOpenChange = (openKeys: string[]) => {
+    const lastKey = openKeys.length > 0 ? openKeys[openKeys.length - 1] : '';// 总是取数组最后一个元素
+    const keys = lastKey ?  [lastKey] : []
+    $set({ openKeys: keys});
   };
-const renderMenu = (data:any[])=>{
-  return data.map((item:any)=>{
-    if(!item.children){
-      return(
-        
-          <Menu.Item 
-            key={item.key}
-            onClick={() => {
-              Router.push(item.key!);
-            }}
-          >
-            { item.icon && <Icon type={item.icon}/> }
-            {/* <Link prefetch  href={item.key}> */}
-              <span>{item.title}</span>
-            {/* </Link> */}
-          </Menu.Item>
-        
-      )
-    }else{
-      return(
-        <SubMenu
-          key={item.key}
-          title={
-            <span>
+  // 初始化导航栏展开项
+  const initOpenKeys = () => {
+    const {pathname} = Router;
+    console.log('路由：',pathname);
+    const key = findKey(pathname,MenuConfig)
+    console.log('key:',key);
+  }
+  const findKey = (key: string, arr: any[]): string => {
+    const target = arr.reduce((init: string, item: any) => {
+      if (key === item.key) {
+        init = key;
+        return init;
+      }else if (item.children){
+        return findKey(key, item.children)
+      } else {
+        return init;
+      }
+    }, "");
+    return target;
+  }
+  const renderMenu = (data:any[])=>{
+    return data.map((item:any)=>{
+      if(!item.children){
+        return(
+            <Menu.Item 
+              key={item.key}
+              onClick={() => {
+                Router.push(item.key!);
+              }}
+            >
               { item.icon && <Icon type={item.icon}/> }
-              <span>{item.title}</span>
-            </span>
-          }
-        >
-          {renderMenu(item.children) }
-        </SubMenu>
-      )
-    }
-  })
-}
+                <span>{item.title}</span>
+            </Menu.Item>
+          
+        )
+      }else{
+        return(
+          <SubMenu
+            key={item.key}
+            title={
+              <span>
+                { item.icon && <Icon type={item.icon}/> }
+                <span>{item.title}</span>
+              </span>
+            }
+          >
+            {renderMenu(item.children) }
+          </SubMenu>
+        )
+      }
+    })
+  }
   return (
     <div className="navigation_div">
        <Menu theme="dark" mode="inline"
           onOpenChange={onOpenChange}
+          openKeys={state.openKeys}
        >
          {state.menuTreeNode}
         </Menu>

@@ -21,7 +21,6 @@ const Header = () => {
     setState(preState => ({ ...preState, ...curState }))
   };
   useEffect(()=>{
-    console.log(location)
    },[])
   return(
   <div className="header_div"  >
