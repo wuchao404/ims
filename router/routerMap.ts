@@ -18,6 +18,10 @@ const routerMap: RouterMap = {
     pathname: '/home',
     bread: '主页'
   },
+  user: {
+    pathname: '/user',
+    bread: '用户管理'
+  }
 }
 
 export default routerMap;

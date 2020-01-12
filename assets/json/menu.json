@@ -12,9 +12,9 @@
       "subKey":"/ui",
       "children":[
           {
-              "title": "按钮",
-              "subKey":"/ui",
-              "key": "/login/register"
+              "title": "用户管理",
+              "subKey":"/user",
+              "key": "/user"
           },
           {
               "title": "弹框",
