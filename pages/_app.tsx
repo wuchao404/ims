@@ -9,22 +9,16 @@ import { jumpToLogin } from '../router/redirect';
 import Main from './components/Main'
 import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
-
-import moment from 'moment';
-import 'moment/locale/zh-cn';
 // 重写_app.js,详情查看 https://nextjs.org/docs#custom-app
 export default (props: any) => {
-  moment.locale('zh-cn');
   const { Component, pageProps } = props;
   const Router = useRouter();
   
   interface StateType {
-    locale:any,
     showNav:boolean
   }
   const initState:StateType = {
     showNav:false,// 是否展示导航
-    locale:zhCN
   };
   const [state, setState] = useState(initState);
 
@@ -65,13 +59,17 @@ export default (props: any) => {
   //新增国际化方法
   return (
     state.showNav ?
-    <ConfigProvider locale={state.locale}>
+    <ConfigProvider 
+    // locale={zhCN}
+    >
       <Main>
         <Component {...pageProps} />
       </Main>
     </ConfigProvider>
     :
-    <ConfigProvider locale={state.locale}>
+    <ConfigProvider  
+    // locale={zhCN}
+    >
       <Component {...pageProps} />
     </ConfigProvider>
   )
