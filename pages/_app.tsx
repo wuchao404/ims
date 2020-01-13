@@ -7,7 +7,6 @@ import { isNotNav } from '../router/notNavList';
 import { hasToken } from '../utils/frontend/storage';
 import { jumpToLogin } from '../router/redirect';
 import Main from './components/Main'
-// import zhCN from 'antd/es/locale/zh_CN';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import { ConfigProvider } from 'antd';
 // 重写_app.js,详情查看 https://nextjs.org/docs#custom-app
