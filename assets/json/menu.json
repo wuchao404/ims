@@ -13,8 +13,8 @@
       "children":[
           {
               "title": "用户管理",
-              "subKey":"/user",
-              "key": "/user"
+              "subKey":"/ui",
+              "key": "/ui/user"
           },
           {
               "title": "弹框",

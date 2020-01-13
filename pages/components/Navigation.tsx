@@ -3,7 +3,7 @@ import './style/navigation.less'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import MenuConfig from '../../assets/json/menu.json';
 import { useRouter } from 'next/router';
-import Link from 'next/link'
+import _ from 'lodash';
 
 
 const Navigation = (props: any) => {
@@ -32,7 +32,6 @@ const Navigation = (props: any) => {
   useEffect(()=>{
     const menuTreeNode=renderMenu(MenuConfig)
     $set({menuTreeNode})
-    initOpenKeys();
   },[])
   
   const onOpenChange = (openKeys: string[]) => {
@@ -41,32 +40,24 @@ const Navigation = (props: any) => {
     $set({ openKeys: keys});
   };
   // 初始化导航栏展开项
-  const initOpenKeys = () => {
-    const {pathname} = Router;
+  const initOpenKeys = (pathname = '') => {
     console.log('路由：',pathname);
     const key = findKey(pathname,MenuConfig)
     console.log('key:',key);
   }
   const findKey = (key: string, arr: any[]): string => {
-    const target = arr.reduce((init: string, item: any) => {
-      if (key === item.key) {
-        init = key;
-        return init;
-      }else if (item.children){
-        return findKey(key, item.children)
-      } else {
-        return init;
-      }
-    }, "");
-    return target;
+    const result = _.find(arr, {key: key});
+    console.log('result: ',result)
+    return '';
   }
   const renderMenu = (data:any[])=>{
-    return data.map((item:any)=>{
+    return data.map(  (item:any)=>{
       if(!item.children){
         return(
             <Menu.Item 
               key={item.key}
               onClick={() => {
+                initOpenKeys(item.key);
                 Router.push(item.key!);
               }}
             >
