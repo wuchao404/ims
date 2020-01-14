@@ -15,12 +15,14 @@ const Navigation = (props: any) => {
   interface StateType {
     openKeys: string[],
     menuTreeNode:any[],
-    rootSubmenuKeys: string[]
+    rootSubmenuKeys: string[],
+    selectedKeys: string[],
   }
   const initState: StateType = {
     openKeys: [],
     menuTreeNode:[],
-    rootSubmenuKeys:[]
+    rootSubmenuKeys:[],
+    selectedKeys:[]
   };
   const [state, setState] = useState(initState);
   // setState方法
@@ -31,24 +33,40 @@ const Navigation = (props: any) => {
   
   useEffect(()=>{
     const menuTreeNode=renderMenu(MenuConfig)
-    $set({menuTreeNode})
+    $set({menuTreeNode});
+    initOpenKeys(Router.pathname);
+    initSelectKeys(Router.pathname);
   },[])
-  
+  // 点击菜单，高亮
   const onOpenChange = (openKeys: string[]) => {
     const lastKey = openKeys.length > 0 ? openKeys[openKeys.length - 1] : '';// 总是取数组最后一个元素
-    const keys = lastKey ?  [lastKey] : []
+    const keys = lastKey ?  [lastKey] : [];
+    console.log('keys:',keys);
     $set({ openKeys: keys});
   };
+  const initSelectKeys = (pathname: string) => {
+    $set({selectedKeys: [pathname]});
+  }
   // 初始化导航栏展开项
   const initOpenKeys = (pathname = '') => {
-    console.log('路由：',pathname);
-    const key = findKey(pathname,MenuConfig)
-    console.log('key:',key);
+    const subMenu = findKey(pathname,MenuConfig);
+    console.log('subMenu: ',subMenu);
+    $set({openKeys: [subMenu]});
   }
-  const findKey = (key: string, arr: any[]): string => {
-    const result = _.find(arr, {key: key});
-    console.log('result: ',result)
-    return '';
+  // 根据路径查找一级菜单
+  const findKey = (key: string, arr: any[]): any => {
+    let init = '';
+    const find = (key: string, arr: any[]) => {
+      arr.map((item, index) => {
+        if (item.key === key) {
+          init = item.subKey;
+        }else if (item.children && item.children.length > 0){
+          find(key, item.children);
+        }
+      })
+    }
+    find(key,arr);
+    return init;
   }
   const renderMenu = (data:any[])=>{
     return data.map(  (item:any)=>{
@@ -57,7 +75,6 @@ const Navigation = (props: any) => {
             <Menu.Item 
               key={item.key}
               onClick={() => {
-                initOpenKeys(item.key);
                 Router.push(item.key!);
               }}
             >
@@ -88,6 +105,8 @@ const Navigation = (props: any) => {
        <Menu theme="dark" mode="inline"
           onOpenChange={onOpenChange}
           openKeys={state.openKeys}
+          selectedKeys={state.selectedKeys}
+          onSelect={({selectedKeys}) => $set({selectedKeys})}
        >
          {state.menuTreeNode}
         </Menu>
