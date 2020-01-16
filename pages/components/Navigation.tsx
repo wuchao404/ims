@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Children } from 'react';
 import './style/navigation.less'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import MenuConfig from '../../assets/json/menu.json';
 import { useRouter } from 'next/router';
-import _ from 'lodash';
+import {findObject} from '../../utils/frontend/collection';
 
+interface ArrayType {
+  [props: string]: any;
+  children?:any[];
+}
 
 const Navigation = (props: any) => {
 
@@ -36,46 +40,33 @@ const Navigation = (props: any) => {
     $set({menuTreeNode});
     initOpenKeys(Router.pathname);
     initSelectKeys(Router.pathname);
+    
   },[])
   // 点击菜单，高亮
   const onOpenChange = (openKeys: string[]) => {
     const lastKey = openKeys.length > 0 ? openKeys[openKeys.length - 1] : '';// 总是取数组最后一个元素
     const keys = lastKey ?  [lastKey] : [];
-    console.log('keys:',keys);
     $set({ openKeys: keys});
   };
   const initSelectKeys = (pathname: string) => {
-    $set({selectedKeys: [pathname]});
+    pathname = pathname === '/' ? '/home': pathname;// 将‘/’转为'/home'
+    const result = findObject(MenuConfig,'path', pathname);
+    $set({selectedKeys: [result.id]});
   }
   // 初始化导航栏展开项
   const initOpenKeys = (pathname = '') => {
-    const subMenu = findKey(pathname,MenuConfig);
-    console.log('subMenu: ',subMenu);
-    $set({openKeys: [subMenu]});
+    const result = findObject(MenuConfig,'path', Router.pathname);
+    $set({openKeys: [result.parentId]});
   }
-  // 根据路径查找一级菜单
-  const findKey = (key: string, arr: any[]): any => {
-    let init = '';
-    const find = (key: string, arr: any[]) => {
-      arr.map((item, index) => {
-        if (item.key === key) {
-          init = item.subKey;
-        }else if (item.children && item.children.length > 0){
-          find(key, item.children);
-        }
-      })
-    }
-    find(key,arr);
-    return init;
-  }
+
   const renderMenu = (data:any[])=>{
     return data.map(  (item:any)=>{
       if(!item.children){
         return(
             <Menu.Item 
-              key={item.key}
+              key={item.id}
               onClick={() => {
-                Router.push(item.key!);
+                Router.push(item.path!);
               }}
             >
               { item.icon && <Icon type={item.icon}/> }
@@ -86,7 +77,7 @@ const Navigation = (props: any) => {
       }else{
         return(
           <SubMenu
-            key={item.key}
+            key={item.id}
             title={
               <span>
                 { item.icon && <Icon type={item.icon}/> }

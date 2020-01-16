@@ -2,8 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import moment from 'moment';
 import {Button} from 'antd'
+import Home from './home'
 
-export default () => {
+const test = () => {
   const encryptFkey = (oldF: string, date: Date) => {
     const ddHHmmss = moment(date).format('DDHHmmss');
     const times = ddHHmmss.split('');
@@ -32,3 +33,4 @@ export default () => {
     </div>
   )
 }
+export default Home;
