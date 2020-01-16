@@ -1,32 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Breadcrumb} from 'antd';
 import './style/header.less';
-import menuJson from '../../assets/json/menu.json';
 import breadList from '../../assets/json/breads.json'
-import {findObject} from '../../utils/frontend/collection';
 import _ from 'lodash';
 import Router from 'next/router';
-
-const linkStyle = {
-  marginRight: 15
-};
 
 const Header = () => {
   interface StateType {
     routes: any[]
   }
   const initState: StateType = {
-    routes:[
-      {
-        path: '/home',
-        breadcrumbName: '首页',
-      },
-      {
-        path: '/table/basic',
-        breadcrumbName: '基础表格',
-      },
-    ]
+    routes:[]
   };
   const [state, setState] = useState(initState);
   // setState方法
