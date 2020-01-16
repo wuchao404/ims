@@ -11,6 +11,5 @@ export default notNavList;
  * @return boolean
  */
 export const isNotNav = (pathname =''): boolean => {
-  console.log('pathname:',pathname)
   return notNavList.findIndex(path => path === pathname) >= 0;
 }

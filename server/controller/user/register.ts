@@ -48,15 +48,12 @@ export const checkUsername = async (req: Request, res: Response) => {
   const { username = '' } = req.query;
   const validate = new ValidateParams({username}).validate(req,res);
   if (!validate) return;
-  console.log('username:',username)
   const has = await hasAlreadyRegisted(username);
-  console.log('是否已注册：',has);
   res.send(getResponse(has));
 }
 // 改用户名是否已注册
 const hasAlreadyRegisted = async (username: string): Promise<boolean> => {
   return queryUserId(username).then((users: User[]) => {
-    console.log('查询注册user：',users);
     return  users.length > 0;
   }).catch((e) => {// 查询出现异常，要视为存在，不允许用户注册
     console.error(e);

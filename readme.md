@@ -20,7 +20,6 @@ app.use(bodyParser.json()); // 解析 application/json
 app.use(bodyParser.urlencoded({ extended: true })); // 解析 application/x-www-form-urlencoded
 
 app.post('/profile', upload.array(), function (req, res, next) {
-  console.log(req.body);
   res.json(req.body);
 });
 ```

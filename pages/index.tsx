@@ -17,8 +17,6 @@ const test = () => {
     const date = new Date();
     date.setTime(1574764249607);
     const encode = encryptFkey('abcdefgh', date)
-    console.log("加密后: " + encode);
-    console.log("timestamp: " + date.getTime())
     return encode;
   }
   return (

@@ -7,7 +7,6 @@ import { userName, phoneTest, phoneTestCode } from "../../assets/utils/pattern";
 
 export const formRegister = (props: any) => {
   useEffect(() => {
-    console.log(props)
   }, [])
   const { getFieldDecorator, validateFields, getFieldValue } = props.form;
   const FormItem = Form.Item;
@@ -100,21 +99,18 @@ export const formRegister = (props: any) => {
         $set({ btnText: '重新发送', phoneDisable: false })
         $set({ timer: 10 })
       }
-      console.log(state.timer)
     }, 1000);
 
   }
   //发送验证码
   const verificationCode = () => {
     let phonecode = props.form.getFieldValue("phone")
-    console.log(phonecode)
     //当发送验证码成功时
     count()
 
   }
   //校验验证码
   const validPhoneCode = (rule: any, val: any, callback: any) => {
-    console.log(val)
     if (val !== "") {
       if (!phoneTestCode(val)) { // 正则验证
         callback('请输入正确的手机验证码'); // 校验未通过

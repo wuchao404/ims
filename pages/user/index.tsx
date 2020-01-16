@@ -127,13 +127,11 @@ export const user = (props: any) => {
   //单行编辑
   const handlEdit = (record: any)=>{
     //获取key 传递接口 刷新数据
-    console.log(record.key)
     Router.push("/user/edit/"+record.key);
   }
   //单行删除
   const handleDelete = (record: any) => {
     //获取key 传递接口 刷新数据
-    console.log(record.key)
     
   };
   //全选
@@ -149,7 +147,6 @@ export const user = (props: any) => {
   }
   //分页取数据
   const changePage =(page:any)=> {
-    console.log(page);
     $set({
       current: page,
     });
@@ -168,7 +165,6 @@ export const user = (props: any) => {
   }
   //批量删除
   const batchDeletion =()=>{
-    console.log(state.selectedRows)
   }
   //手机号验证
   const validPhone = (rule: any, val: any, callback: any) => {
@@ -184,7 +180,7 @@ export const user = (props: any) => {
   }
   //搜索
   const doSeach=()=>{
-      console.log(getFieldValue("phone"))
+      (getFieldValue("phone"))
     
   }
   
