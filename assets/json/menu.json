@@ -27,6 +27,13 @@
                 "path": "/table/high"
             }
         ]
+    },
+    {
+        "title": "用户管理",
+        "id": "3000",
+        "path": "/user",
+        "icon": "user",
+        "parentId": "0"
     }
     
 ]

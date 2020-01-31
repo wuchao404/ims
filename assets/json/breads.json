@@ -14,5 +14,9 @@
   {
     "path":"/table/high",
     "breadcrumbName":"高级表格"
+  },
+  {
+    "path":"/user",
+    "breadcrumbName":"用户管理"
   }
 ]
