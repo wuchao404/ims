@@ -2,8 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import moment from 'moment';
 import {Button} from 'antd'
+import Home from './home'
 
-export default () => {
+const test = () => {
   const encryptFkey = (oldF: string, date: Date) => {
     const ddHHmmss = moment(date).format('DDHHmmss');
     const times = ddHHmmss.split('');
@@ -16,8 +17,6 @@ export default () => {
     const date = new Date();
     date.setTime(1574764249607);
     const encode = encryptFkey('abcdefgh', date)
-    console.log("加密后: " + encode);
-    console.log("timestamp: " + date.getTime())
     return encode;
   }
   return (
@@ -32,3 +31,4 @@ export default () => {
     </div>
   )
 }
+export default Home;

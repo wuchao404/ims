@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Children } from 'react';
 import './style/navigation.less'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import MenuConfig from '../../assets/json/menu.json';
 import { useRouter } from 'next/router';
-import _ from 'lodash';
+import {findObject} from '../../utils/frontend/collection';
 
+interface ArrayType {
+  [props: string]: any;
+  children?:any[];
+}
 
 const Navigation = (props: any) => {
 
@@ -15,12 +19,14 @@ const Navigation = (props: any) => {
   interface StateType {
     openKeys: string[],
     menuTreeNode:any[],
-    rootSubmenuKeys: string[]
+    rootSubmenuKeys: string[],
+    selectedKeys: string[],
   }
   const initState: StateType = {
     openKeys: [],
     menuTreeNode:[],
-    rootSubmenuKeys:[]
+    rootSubmenuKeys:[],
+    selectedKeys:[]
   };
   const [state, setState] = useState(initState);
   // setState方法
@@ -31,34 +37,36 @@ const Navigation = (props: any) => {
   
   useEffect(()=>{
     const menuTreeNode=renderMenu(MenuConfig)
-    $set({menuTreeNode})
+    $set({menuTreeNode});
+    initOpenKeys(Router.pathname);
+    initSelectKeys(Router.pathname);
+    
   },[])
-  
+  // 点击菜单，高亮
   const onOpenChange = (openKeys: string[]) => {
     const lastKey = openKeys.length > 0 ? openKeys[openKeys.length - 1] : '';// 总是取数组最后一个元素
-    const keys = lastKey ?  [lastKey] : []
+    const keys = lastKey ?  [lastKey] : [];
     $set({ openKeys: keys});
   };
+  const initSelectKeys = (pathname: string) => {
+    pathname = pathname === '/' ? '/home': pathname;// 将‘/’转为'/home'
+    const result = findObject(MenuConfig,'path', pathname);
+    $set({selectedKeys: [result.id]});
+  }
   // 初始化导航栏展开项
   const initOpenKeys = (pathname = '') => {
-    console.log('路由：',pathname);
-    const key = findKey(pathname,MenuConfig)
-    console.log('key:',key);
+    const result = findObject(MenuConfig,'path', Router.pathname);
+    $set({openKeys: [result.parentId]});
   }
-  const findKey = (key: string, arr: any[]): string => {
-    const result = _.find(arr, {key: key});
-    console.log('result: ',result)
-    return '';
-  }
+
   const renderMenu = (data:any[])=>{
     return data.map(  (item:any)=>{
       if(!item.children){
         return(
             <Menu.Item 
-              key={item.key}
+              key={item.id}
               onClick={() => {
-                initOpenKeys(item.key);
-                Router.push(item.key!);
+                Router.push(item.path!);
               }}
             >
               { item.icon && <Icon type={item.icon}/> }
@@ -69,7 +77,7 @@ const Navigation = (props: any) => {
       }else{
         return(
           <SubMenu
-            key={item.key}
+            key={item.id}
             title={
               <span>
                 { item.icon && <Icon type={item.icon}/> }
@@ -88,6 +96,8 @@ const Navigation = (props: any) => {
        <Menu theme="dark" mode="inline"
           onOpenChange={onOpenChange}
           openKeys={state.openKeys}
+          selectedKeys={state.selectedKeys}
+          onSelect={({selectedKeys}) => $set({selectedKeys})}
        >
          {state.menuTreeNode}
         </Menu>

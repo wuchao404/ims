@@ -9,13 +9,12 @@ import ExpressServer from './expressServer';
 import {Express} from 'express';
 
 
-// console.log("env:"+process.env.NODE_ENV)
 const app: NextServer = next({ dev: configs.dev });
 const server: Express = new ExpressServer(app).init();
 
 app.prepare().then(() => {
   server.listen(4000)
 }).catch(e => {
-  console.log('app.js:',e);
+  console.error('app.js:',e);
 })
 export default server;

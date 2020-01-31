@@ -14,7 +14,6 @@ app.prepare().then(() => {
     app.render(req, res, '/login',req.query);
   });
   server.all("*",(req: Request, res: Response) => {
-    console.log('path:',req.path);
     handler(req, res);
   })
   server.listen(3000)

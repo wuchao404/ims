@@ -9,16 +9,11 @@ import { existTokenInRedis } from '../../db/redisHelper'
 export const interceptAPI = (req: Request, res: Response, next: Function) => {
   const token = req.get('token');
   const { path = '',baseUrl = '' } = req;
-  console.log('baseUrl: ',req.baseUrl)
-  console.log('originalUrl: ',req.originalUrl)
-  console.log('interceptAPI,path:',path);
   const fullPath = baseUrl + path;
-  console.log('fullPath: '+ fullPath)
   if (inWhiteList(fullPath)) { // 白名单内不校验token
     next();
   }else {
     const user = verifyToken(token);
-    console.log('interceptAPI,user:', user);
     const isExist = existTokenInRedis(token!);
     if (!user) { // token解析失败
       res.send(ResData.error({

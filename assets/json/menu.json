@@ -1,163 +1,32 @@
 [
-  {
-      "title":"首页",
-      "key":"/home",
-      "icon":"pie-chart",
-      "subKey":"/home"
-  },
-  {
-      "title":"UI",
-      "icon":"pie-chart",
-      "key":"/ui",
-      "subKey":"/ui",
-      "children":[
-          {
-              "title": "用户管理",
-              "subKey":"/ui",
-              "key": "/ui/user"
-          },
-          {
-              "title": "弹框",
-              "subKey":"/ui",
-              "key": "/ui/modals"
-          },
-          {
-              "title": "Loading",
-              "subKey":"/ui",
-              "key": "/ui/loadings"
-          },
-          {
-              "title": "通知提醒",
-              "subKey":"/ui",
-              "key": "/ui/notification"
-          },
-          {
-              "title": "全局Message",
-              "subKey":"/ui",
-              "key": "/ui/messages"
-          },
-          {
-              "title": "Tab页签",
-              "subKey":"/ui",
-              "key": "/ui/tabs"
-          },
-          {
-              "title": "图片画廊",
-              "subKey":"/ui",
-              "key": "/ui/gallery"
-          },
-          {
-              "title": "轮播图",
-              "subKey":"/ui",
-              "key": "/ui/carousel"
-          }            
-      ]        
-  },
-  {
-      "title":"表单",
-      "key":"/from",
-      "subKey":"/from",
-      "icon":"pie-chart",
-      "children": [
-          {
-              "title": "登录",
-              "subKey":"/from",
-              "key": "/form/login"
-          },
-          {
-              "title": "注册",
-              "subKey":"/from",
-              "key": "/form/reg"
-          }
-      ]       
-  },
-  {
-      "title":"表格",
-      "key":"/table",
-      "subKey":"/table",
-      "icon":"pie-chart",
-      "children": [
-          {
-              "title": "基础表格",
-              "subKey":"/table",
-              "key": "/table/basic"
-          },
-          {
-              "title": "高级表格",
-              "subKey":"/table",
-              "key": "/table/high"
-          }
-      ]        
-  },
-  {
-      "title":"富文本",
-      "icon":"pie-chart",
-      "subKey":"/rich",
-      "key":"/rich"        
-  },
-  {
-      "title":"城市管理",
-      "icon":"pie-chart",
-      "subKey":"/city",
-      "key":"/city"        
-  },
-  {
-      "title":"订单管理",
-      "subKey":"/order",
-      "key":"/order",
-      "icon":"pie-chart",
-      "children": [
-          {
-              "title": "订单详情",
-              "subKey":"/order",
-              "key": "detail"
-          },
-          {
-              "title": "结束订单",
-              "subKey":"/order",
-              "key": "finish"
-          }
-      ]               
-  },
-  {
-      "title":"员工管理",
-      "icon":"pie-chart",
-      "subKey":"/user",
-      "key":"/user"        
-  },
-  {
-      "title":"车辆地图",
-      "icon":"pie-chart",
-      "subKey":"/bikeMap",
-      "key":"/bikeMap"        
-  },
-  {
-      "title":"图标",
-      "key":"/charts",
-      "subKey":"/charts",
-      "icon":"pie-chart",
-      "children": [
-          {
-              "title": "柱形图",
-              "subKey":"/charts",
-              "key": "/charts/bar"
-          },
-          {
-              "title": "饼图",
-              "subKey":"/charts",
-              "key": "/charts/pie"
-          },
-          {
-              "title": "折线图",
-              "subKey":"/charts",
-              "key": "/charts/line"
-          }
-      ]       
-  },
-  {
-      "title": "权限设置",
-      "icon":"pie-chart",
-      "subKey":"/permission",
-      "key": "/permission"
-  }
+    
+    {
+        "title": "首页",
+        "id": "1000",
+        "path": "/home",
+        "icon": "pie-chart",
+        "parentId": "0"
+    },
+    {
+        "title": "表格",
+        "path": "/table",
+        "id": "2000",
+        "parentId": "0",
+        "icon": "table",
+        "children": [
+            {
+                "title": "基础表格",
+                "parentId": "2000",
+                "id": "2001",
+                "path": "/table/basic"
+            },
+            {
+                "title": "高级表格",
+                "parentId": "2000",
+                "id": "2002",
+                "path": "/table/high"
+            }
+        ]
+    }
+    
 ]

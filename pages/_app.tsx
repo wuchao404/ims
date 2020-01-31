@@ -41,7 +41,6 @@ export default (props: any) => {
   // 是否展示导航
   const setNavVisible = (pathname = '') => {
     const showNav = !isNotNav(pathname)
-    console.log('showNav:',showNav)
     $set({ showNav });
   }
   // 根据路由改变状态

@@ -14,7 +14,6 @@ export const existTokenInRedis = (token: string): boolean => {
 export const addToken2Redis = (token: string,user: User) => {
   user.password && delete user.password;
   client.hmset(token, {...user},(err: Error | null, reply: any) => {
-    console.log('reply:',reply)
   })
 }
 /**

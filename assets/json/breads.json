@@ -1,0 +1,18 @@
+[
+  {
+    "path":"/",
+    "breadcrumbName":"首页"
+  },
+  {
+    "path":"/home",
+    "breadcrumbName":"首页"
+  },
+  {
+    "path":"/table/basic",
+    "breadcrumbName":"基础表格"
+  },
+  {
+    "path":"/table/high",
+    "breadcrumbName":"高级表格"
+  }
+]
