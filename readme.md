@@ -48,3 +48,9 @@ app.post('/profile', upload.array(), function (req, res, next) {
 - 2. [监听router变化，过滤白名单](https://nextjs.org/docs#router-events)
 > 所有监听方法，首次刷新页面是不执行的，因此无法
 - 3.[使用`/// <reference path`引用node_modules中的其他`d.ts`声明文件](https://www.jianshu.com/p/c143e7af7c04)
+
+# 8.用户
+- 1.用户角色：
+- - 普通用户：只能看普通页面，没有导航，但是有面包屑
+- - 超级管理员：权限最大
+- - 普通管理员：普通权限

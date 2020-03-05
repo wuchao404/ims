@@ -13,7 +13,7 @@ export const doRegister = async (req: Request, res: Response) => {
     username = '',
     password =  '',
     name =  '',
-    birthday =  '',
+    birthday,
     address =  '',
     mobilePhone =  ''
   } = req.body;
