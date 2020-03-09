@@ -4,6 +4,7 @@ import {logoutApi} from '../../assets/api/login'
 import { Button } from 'antd';
 import {clearAllStorage} from '../../utils/frontend/storage';
 import {jumpToLogin} from '../../router/redirect'
+import PictureWall from '../components/PictureWall'
 
 export default () => {
   const initState = {
@@ -35,6 +36,9 @@ export default () => {
       <Button onClick={getList}>查询</Button>
       <div>
         <Button onClick={logout} type='dashed'>退出登陆</Button>
+      </div>
+      <div>
+        <PictureWall />
       </div>
     </div>
   )

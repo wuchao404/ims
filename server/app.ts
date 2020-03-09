@@ -13,7 +13,7 @@ const app: NextServer = next({ dev: configs.dev });
 const server: Express = new ExpressServer(app).init();
 
 app.prepare().then(() => {
-  server.listen(4000)
+  server.listen(configs.port)
 }).catch(e => {
   console.error('app.js:',e);
 })

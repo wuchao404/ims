@@ -2,6 +2,7 @@
 const whiteList = [
   '/api/doLogin',
   '/api/register',
+  '/api/upload',
   '/api/register/checkUsername',
 ]
 export default whiteList;

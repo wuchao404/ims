@@ -5,6 +5,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { UrlWithParsedQuery } from 'url';
 import * as UserCenter from './controller/user';
 import * as Info from './controller/info';
+import * as Upload from './controller/upload';
 import {interceptAPI} from './tools/middleWare/interception'
 
 // express服务
@@ -27,6 +28,7 @@ class ExpressServer {
     this.server.post('/api/register',UserCenter.default.doRegister);
     this.server.get('/api/register/checkUsername',UserCenter.default.checkUsername);
     this.server.get('/api/info/list',Info.getInfoList);// 首页列表
+    this.server.post('/api/upload',Upload.upload);
     this.server.all('*',(req: Request,res: Response) => {
       this.handle(req, res);
     })
