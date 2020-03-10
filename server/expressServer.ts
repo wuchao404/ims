@@ -28,7 +28,8 @@ class ExpressServer {
     this.server.post('/api/register',UserCenter.default.doRegister);
     this.server.get('/api/register/checkUsername',UserCenter.default.checkUsername);
     this.server.get('/api/info/list',Info.getInfoList);// 首页列表
-    this.server.post('/api/upload',Upload.upload);
+    this.server.post('/api/upload/up',Upload.upload);
+    this.server.get('/api/upload/delete',Upload.deleteImg);
     this.server.all('*',(req: Request,res: Response) => {
       this.handle(req, res);
     })

@@ -3,11 +3,14 @@ export const port: number = 4000;
 // 是否是dev环境
 export const dev: boolean = process.env.NODE_ENV === 'development';
 // mysql链接地址
-export const mysqlHost: string = dev ? '123.206.72.106' : 'localhost';
+// export const mysqlHost: string = dev ? '123.206.72.106' : 'localhost';
+export const mysqlHost: string = 'localhost';
 // 用户名
-export const mysqlUser: string = dev ? 'admin' : 'root';
+// export const mysqlUser: string = dev ? 'admin' : 'root';
+export const mysqlUser: string = 'root';
 // 密码
-export const mysqlPwd: string = dev ? '123456' : 'w53476157';
+// export const mysqlPwd: string = dev ? '123456' : 'w53476157';
+export const mysqlPwd: string = 'w53476157';
 // 数据库名
 export const mysqlDb: string = 'management';
 // jwt加密串

@@ -1,11 +1,12 @@
+import { ImageModal } from './../../modal/image/imageModal';
 import {Request, Response} from 'express';
 import {IncomingForm, Fields, Files, File} from 'formidable';
-import {success} from '../../../utils/responseData';
-import fs, {Stats} from 'fs';
-import {UUID} from '../../tools/unique'
-import {nginxDir, origin} from '../../config';
-import path from 'path';
+import {success,error} from '../../../utils/responseData';
+import {moveSync} from './uploadUtil';
+import {insertImg, deleteSingleImage,querySingleImage} from '../../db/upload';
+import fs from 'fs';
 
+// 上传图片
 export const upload = (req: Request, res: Response) => {
   // 步骤
   // 1.移动到指定目录（没有改目录则创建），并给更改文件名（按照业务id）
@@ -14,25 +15,37 @@ export const upload = (req: Request, res: Response) => {
   // 4.响应给前端
   const form = new IncomingForm();
   form.parse(req, (err: any, fields: Fields, files: Files) => {
-    const {fileName = '', url} = moveSync(files.file,'123');
-    console.log('files: ', files)
-    console.log('fields: ', fields)
-    res.send(success({ data: url }));
+    const {id: listId =''} = fields;
+    const {fileName, url, diskPath} = moveSync(files.file, <string>listId);-
+    insertImg({fileName, dirId: <string>listId, url, diskPath}).then((img: ImageModal) => {
+      const {id = '', url = ''} = img;
+      res.send(success({ data: {id, url} }));
+    }).catch(() => {
+      res.send(error({ message: '图片保存失败，请重新上传' }));
+    })
   })
 }
 
-// 将文件移动到指定目录，并返回文件信息
-const moveSync = (file: File,id: string):{fileName: string, url: string} => {
-  const {path:oldPath = '', type = '',name = ''} = file;
-  const fileName = `${new UUID().v4()}-${new Date().getTime()}${path.extname(name)}`;// 重命名图片
-  const dirName = `images/${id}`;
-  if (!fs.existsSync(`${nginxDir}/${dirName}`)) {
-    fs.mkdirSync(`${nginxDir}/${dirName}`,{ recursive: true });// 不存在在创建
-  }
-  const newPath = `${nginxDir}/${dirName}/${fileName}`;
-  fs.renameSync(oldPath, newPath);
-  return {
-    fileName,
-    url: `${origin}/${dirName}/${fileName}` // http开头的url
-  }
+// 删除图片
+export const deleteImg = (req: Request, res: Response) => {
+  // 步骤
+  // 1、根据图片id查找记录
+  // 2.删除磁盘的记录和数据库的记录
+  // 3.响应前端
+  const {id = ''} = req.query;
+  querySingleImage(id).then((img: ImageModal) => {
+    const {diskPath = ''} = img;
+    if (fs.existsSync(diskPath)) {
+      fs.unlinkSync(diskPath);//删磁盘
+    }
+    deleteSingleImage(id).then(() => {;// 删库
+      res.send(success());
+    })
+  }).catch((err: any) => {
+    console.error('deleteImg: ',err)
+    res.send(error({ message: '删除失败' }))
+  })
+
 }
+
+

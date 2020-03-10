@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
-import {Upload,Modal, Icon} from 'antd';
-import {getToken} from '../../utils/frontend/storage'
+import {Upload,Modal, Icon, notification} from 'antd';
+import {getToken} from '../../utils/frontend/storage';
+import {deleteApi} from '../../assets/api/upload'
 
 // 照片墙
 const PictureWall = (props: any) => {
@@ -43,9 +44,26 @@ const PictureWall = (props: any) => {
     });
   };
 
-  const handleChange = ({ fileList = [] }:any) => {
-    $set({ fileList });
+  const handleChange = ({ fileList = [], file}:any) => {
+    console.log('file: ', file);
+    const {status = '',response = {}} = file;
+    if (status === 'done') {
+      const {status,data = {}} = response;
+      const {id = '', url = ''} = data;
+      if (status === 200) {
+        file.uid = id;
+        file.url = url;
+      }
+    }
+    $set({ fileList:[...state.fileList, file] });
   };
+  // 移除
+  const handleRemove = (file: any) => {
+    const {uid = ''} = file;
+    deleteApi({id: uid}).then(res => {
+      notification.success({ message:'提示', description:'删除成功', duration: 2})
+    })
+  }
   const uploadButton = (
     <div>
       <Icon type='plus'/>
@@ -54,13 +72,14 @@ const PictureWall = (props: any) => {
   );
   return <div>
     <Upload
-          action="/api/upload"
+          action="/api/upload/up"
           listType="picture-card"
           headers={{ token }}
           fileList={state.fileList}
-          data={{id: '1000999222'}}
+          data={{listId: '1000999222'}}
           onPreview={handlePreview}
           onChange={handleChange}
+          onRemove={handleRemove}
         >
           {state.fileList.length >= 8 ? null : uploadButton}
         </Upload>
