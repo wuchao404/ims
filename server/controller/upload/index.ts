@@ -15,7 +15,7 @@ export const upload = (req: Request, res: Response) => {
   // 4.响应给前端
   const form = new IncomingForm();
   form.parse(req, (err: any, fields: Fields, files: Files) => {
-    const {id: listId =''} = fields;
+    const {listId =''} = fields;
     const {fileName, url, diskPath} = moveSync(files.file, <string>listId);-
     insertImg({fileName, dirId: <string>listId, url, diskPath}).then((img: ImageModal) => {
       const {id = '', url = ''} = img;

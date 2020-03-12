@@ -45,17 +45,24 @@ const PictureWall = (props: any) => {
   };
 
   const handleChange = ({ fileList = [], file}:any) => {
-    console.log('file: ', file);
-    const {status = '',response = {}} = file;
-    if (status === 'done') {
+    const {status,response = {},uid = ''} = file;
+    if (status == 'done'){
       const {status,data = {}} = response;
       const {id = '', url = ''} = data;
-      if (status === 200) {
-        file.uid = id;
-        file.url = url;
-      }
+      fileList = fileList.reduce((list:Array<any>, file: any) => {
+        if(file.uid === uid && status === 200) {
+          file.uid = id;
+          file.url = url;
+        }
+        list.push(file);
+        return list;
+      },[])
+      console.log('fileList1:', fileList)
+      console.log('file:', file)
     }
-    $set({ fileList:[...state.fileList, file] });
+    console.log('fileList2: ', fileList)
+    $set({ fileList });
+    
   };
   // 移除
   const handleRemove = (file: any) => {
